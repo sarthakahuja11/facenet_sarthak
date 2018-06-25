@@ -1,14 +1,9 @@
-import csv
 import numpy as np
 import pandas as pd
-#from keras.engine.training import _make_batches
+from keras.engine.training import _make_batches
 #from skimage.io import imread
 import cv2
 import glob
-import pylab as plt
-import keras
-#from augmentation import resizeImage,\randomcropImage, augmentData
-#from keras.utils import to_categorical
 
 
 #class (keras.utils.Sequence):
@@ -39,21 +34,21 @@ def generator_facenet(csv_file, batch_size=2, num_classes=53, is_training=True):
     #len_image_files_path = len(image_files_path)
     #print len_image_files_path
     image_files_path = np.array(imagenames_list)
+    len_image_files_path = len(image_files_path)
      #df  = pd.read_csv("Classes.csv",index=false)  #TO DO
     df = pd.read_csv(csv_file, delimiter=",", index_col=False)
 
 
     while True:
-        #batches = _make_batches(size=len_image_files_path,
-                                #batch_size=10)
-        for start, end in image_files_path:
+        batches = _make_batches(size=len_image_files_path,batch_size=2)
+        for start, end in batches:
             arr = []
             Y = []
             X = []
             cur_batch = image_files_path[start:end]
             #print "current Batch size", len(cur_batch)
             for image_path in cur_batch:
-                print image_path
+                #print image_path
                 img = imread(fname=image_path)
                 
            

@@ -16,8 +16,8 @@ from generator.generator_facenet import generator_facenet
 #for i in range(10000,13143):
 #  partition['validation'].append(i)
 
-seed = 7
-np.random.seed(seed)
+#seed = 7
+#np.random.seed(seed)
 
 # Parameters
 #params = {'dim': (250,250,3),
@@ -26,7 +26,7 @@ np.random.seed(seed)
           #'n_channels': 1,
           #'shuffle': True}
 
-img,label = generator_facenet("Classes.csv",2,53,True)#,partition)
+img,label = generator_facenet("Classes.csv",2,53)#,partition)
 # Datasets
 df = pd.read_csv("Classes.csv", delimiter=",")
 # split into input (X) and output (Y) variables
@@ -44,7 +44,7 @@ Y = array[:,0]
 
 # Design model
 model = Sequential()
-model=inception_resnet_v1()
+model= inception_resnet_v1()
 #[...] # Architecture
 #FACENET MODEL
 #Extract embeddings
@@ -85,7 +85,6 @@ mouth_out=Dense(3,activation='softmax', name ='mouth_out')(sequential_model_out)
 beard_out=Dense(2,activation='softmax', name ='beard_hair_out')(sequential_model_out)
 face_out=Dense(3,activation='softmax', name ='face_out')(sequential_model_out)
 
-#Y = to_categorical(y=Y,num_classes=num_classes)
 
 
 # 41 classes for sigmoid
