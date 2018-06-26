@@ -26,6 +26,12 @@ output_classes=[3,3,2,4,2,3,2,2,3,3,2,3]
 for i in range(41):
     output_classes.append(1)
 
+train_list_IDs=[]
+for i in range(0,10000):
+    train_list_IDs.append(i)
+for i in range(10000,13144):
+    val_list_IDs.append(i)
+
 # Parameters
 params = {'dim': (250,250),
           'batch_size': 32,
