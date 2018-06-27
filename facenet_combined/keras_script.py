@@ -4,8 +4,9 @@ from keras.layers import Dense
 from keras.layers import Input
 from keras.models import Model
 from keras.models import Sequential
-
-from arch.inception_resnet_v1 import inception_resnet_v1
+import sys
+sys.path.insert(0, 'arch')
+from inception_resnet_v1 import inception_resnet_v1
 from data import DataGenerator
 
 #from data import DataGenerator
@@ -19,7 +20,7 @@ from data import DataGenerator
 #seed = 7
 #np.random.seed(seed)
 
-with open("imagepaths.txt") as f:
+with open("/home/udayakumar97/sarthak_project/facenet_sarthak/Imagepaths.txt") as f:
     imagepaths=f.readlines()
 imagepaths=[x.strip() for x in imagepaths]
 output_classes=[3,3,2,4,2,3,2,2,3,3,2,3]
@@ -29,15 +30,22 @@ for i in range(41):
 train_list_IDs=[]
 for i in range(0,10000):
     train_list_IDs.append(i)
+val_list_IDs=[]
 for i in range(10000,13144):
     val_list_IDs.append(i)
 
 # Parameters
-params = {'dim': (250,250),
+params = {'height':250,
+            'width':250,
           'batch_size': 32,
-          'n_classes': 53
           'n_channels': 3,
-          'shuffle': True }
+          'shuffle': True,
+          'output_classes':output_classes,
+          'imagepaths':imagepaths }
+training_generator = DataGenerator(train_list_IDs,**params)
+validation_generator = DataGenerator(val_list_IDs,**params)
+
+'''
 
 img,label = generator_facenet("Classes.csv",2,53)#,partition)
 # Datasets
@@ -47,6 +55,7 @@ array = df.values
 # separate array into input and output components
 X = array[:,0:72]
 Y = array[:,0]
+'''
 
 #partition = # IDs
 #labels = # Labels
@@ -177,7 +186,7 @@ model.compile(loss=losses,optimizer='adam', metrics=['accuracy'])
 
 model.summary()
 # Train model on dataset
-model.fit_generator(generator=generator_facenet,use_multiprocessing=True,workers=6)
+model.fit_generator(generator=generator_facenet,validation_data=validation_generator, use_multiprocessing=True,workers=6)
 
 
 #OR USE predict

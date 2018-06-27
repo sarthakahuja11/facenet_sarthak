@@ -3,12 +3,12 @@ import keras
 
 class DataGenerator(keras.utils.Sequence):
 	'Generates data for Keras'
-	def __init__(self, list_IDs, batch_size=32, dim=(250,250), n_channels=3,
-				 output_classes, shuffle=True, imagepaths):
+	def __init__(self, list_IDs, output_classes, imagepaths, batch_size=32,height=250,width=250, n_channels=3,
+				 shuffle=True):
 		'Initialization'
-		self.dim = dim
+		self.height=height
+		self.width=width
 		self.batch_size = batch_size
-		self.labels = labels
 		self.list_IDs = list_IDs
 		self.n_channels = n_channels
 		self.output_classes = output_classes
@@ -42,7 +42,7 @@ class DataGenerator(keras.utils.Sequence):
 	def __data_generation(self, list_IDs_temp):
 		'Generates data containing batch_size samples' # X : (n_samples, *dim, n_channels)
 		# Initialization
-		X = np.empty((self.batch_size, *self.dim, self.n_channels))
+		X = np.empty((self.batch_size, self.height,self.width, self.n_channels))
 		Y = []
 		for output_class in output_classes:
 			t=np.empty((self.batch_size),output_class,dtype=int)
