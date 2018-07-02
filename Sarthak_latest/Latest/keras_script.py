@@ -197,7 +197,7 @@ model.compile(loss=losses,optimizer='adam', metrics=['accuracy'])
 
 model.summary()
 # Train model on dataset
-model.fit_generator(generator=generator_facenet,validation_data=validation_generator, use_multiprocessing=True,workers=6)
+model.fit_generator(generator=training_generator,validation_data=validation_generator, use_multiprocessing=True,workers=6)
 
 
 #OR USE predict

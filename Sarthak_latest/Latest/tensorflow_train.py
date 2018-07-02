@@ -11,6 +11,7 @@ import numpy as np
 import tensorflow as tf
 from skimage.io import imread
 from tensorflow.python.platform import gfile
+from tensorflow.python.framework import graph_util
 from keras import backend as K
 
 from scipy.misc import imread
@@ -47,6 +48,19 @@ val_list_IDs=[]
 for i in range(10000,13144):
     val_list_IDs.append(i)
 
+params = {'height':250,
+          'width':250,
+          'batch_size': 2,
+          'n_channels': 3,
+          'shuffle': True,
+          'output_classes':output_classes,
+          'imagepaths':imagepaths }
+
+training_generator = DataGenerator(train_list_IDs,**params)
+validation_generator = DataGenerator(val_list_IDs,**params)
+
+
+
 # Parameters
 params = {'height':250,
           'width':250,
@@ -64,6 +78,35 @@ model_exp = '/media/sarthak11/DATA-2/Datasets_2/lfw/Alter/20180402-114759/201804
 #saver = tf.train.import_meta_graph('20180402-114759/model-20180402-114759.meta')
 #saver.restore(sess, '20180402-114759/model-20180402-114759.ckpt-275.data-00000-of-00001')
 # print("loaded graph and meta")
+
+
+def freeze_graph_def(sess, input_graph_def, output_node_names):
+    for node in input_graph_def.node:
+        if node.op == 'RefSwitch':
+            node.op = 'Switch'
+            for index in xrange(len(node.input)):
+                if 'moving_' in node.input[index]:
+                    node.input[index] = node.input[index] + '/read'
+        elif node.op == 'AssignSub':
+            node.op = 'Sub'
+            if 'use_locking' in node.attr: del node.attr['use_locking']
+        elif node.op == 'AssignAdd':
+            node.op = 'Add'
+            if 'use_locking' in node.attr: del node.attr['use_locking']
+
+    # Get the list of important nodes
+    whitelist_names = []
+    for node in input_graph_def.node:
+        if (node.name.startswith('InceptionResnetV1') or node.name.startswith('embeddings') or
+                node.name.startswith('phase_train') or node.name.startswith('Bottleneck') or node.name.startswith(
+                    'Logits')):
+            whitelist_names.append(node.name)
+
+    # Replace all the variables in the graph with constants of the same values
+    output_graph_def = graph_util.convert_variables_to_constants(
+        sess, input_graph_def, output_node_names.split(","),
+        variable_names_whitelist=whitelist_names)
+    return output_graph_def
 
 
 def main(args):
@@ -95,6 +138,7 @@ def main(args):
             embedding_size = embeddings.get_shape()[1]
             #print(embedding_size)
 
+
             X = []
             print('Calculating features for images')
             nrof_images = len(paths)
@@ -113,8 +157,14 @@ def main(args):
                 #X[i]=emb_array[start_index:end_index, :]
 
                 #print(X[3])
-                print(emb_array[start_index:end_index,:])
-                print(emb_array[start_index].shape)
+                #print(emb_array[start_index:end_index,:])
+                #print(emb_array[start_index].shape)
+
+            input_graph_def = sess.graph.as_graph_def()
+            output_graph_def = freeze_graph_def(sess, input_graph_def, 'embeddings')
+            print(output_graph_def)
+
+model=inception_resnet_v1()
 
 
 '''''
@@ -209,6 +259,9 @@ losses=['categorical_crossentropy','categorical_crossentropy','categorical_cross
         'binary_crossentropy']
 
 '''''
+
+model.fit_generator(generator=training_generator,validation_data=validation_generator, use_multiprocessing=True,workers=6)
+
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
 
