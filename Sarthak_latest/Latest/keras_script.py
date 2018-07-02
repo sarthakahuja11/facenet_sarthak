@@ -1,26 +1,27 @@
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 from keras.layers import Dense
 from keras.layers import Input
 from keras.models import Model
 from keras.models import Sequential
 import sys
 sys.path.insert(0, 'arch')
-from inception_resnet_v1 import inception_resnet_v1
+from arch.inception_resnet_v1_in_keras import create_inception_resnet_v1
 from data import DataGenerator
 
 #from data import DataGenerator
 
 #partition={'train':[],'validation':[]}
 #for i in range(10000):
- # partition['train'].append(i)
+# partition['train'].append(i)
 #for i in range(10000,13143):
 #  partition['validation'].append(i)
 
 #seed = 7
 #np.random.seed(seed)
 
-with open("/home/udayakumar97/sarthak_project/facenet_sarthak/Imagepaths.txt") as f:
+with open("/media/sarthak11/DATA-2/Datasets_2/lfw/Alter/Imagepaths.txt") as f:
     imagepaths=f.readlines()
 imagepaths=[x.strip() for x in imagepaths]
 output_classes=[3,3,2,4,2,3,2,2,3,3,2,3]
@@ -36,19 +37,18 @@ for i in range(10000,13144):
 
 # Parameters
 params = {'height':250,
-            'width':250,
-          'batch_size': 32,
+          'width':250,
+          'batch_size': 2,
           'n_channels': 3,
           'shuffle': True,
           'output_classes':output_classes,
           'imagepaths':imagepaths }
+
 training_generator = DataGenerator(train_list_IDs,**params)
 validation_generator = DataGenerator(val_list_IDs,**params)
 
 '''
-
 img,label = generator_facenet("Classes.csv",2,53)#,partition)
-# Datasets
 df = pd.read_csv("Classes.csv", delimiter=",")
 # split into input (X) and output (Y) variables
 array = df.values
@@ -66,13 +66,24 @@ Y = array[:,0]
 
 # Design model
 model = Sequential()
-model = inception_resnet_v1()
+input_lyr=Input(shape=(None,None,3))
+model = create_inception_resnet_v1(nb_classes=53)
+print model.summary()
+
 #[...] # Architecture
 #FACENET MODEL
 #Extract embeddings
 #keras.applications.inception_resnet_v2.InceptionResNetV2(include_top=True, weights='imagenet',input_tensor=None, input_shape=None, pooling=None, classes=1000)
 
-model.load_weights('/home/udayakumar97/sarthak_project/facenet_sarthak/20180402-114759/20180402-114759.pb')
+'''
+sess=tf.Session()
+saver = tf.train.import_meta_graph('/media/sarthak11/DATA-2/Datasets_2/lfw/Alter/20180402-114759/model-20180402-114759.meta')
+saver.restore(sess,tf.train.latest_checkpoint('/media/sarthak11/DATA-2/Datasets_2/lfw/Alter/20180402-114759/20180402-114759.pb'))
+print(sess.run('bias:0'))
+'''
+
+model.load_weights('/media/sarthak11/DATA-2/Datasets_2/lfw/Alter/20180402-114759/20180402-114759.pb')
+print "loaded weights successfully"
 
 for layer in model.layers[:15]:
     layer.trainable = False
@@ -192,9 +203,10 @@ model.fit_generator(generator=generator_facenet,validation_data=validation_gener
 #OR USE predict
 
 # evaluate the model
-scores = model.evaluate(img, label)
+scores = model.evaluate(X, Y)
 print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
+#predictions.predict(model, partition['test'], dictionary)
 
 
 #to calculate predictions
@@ -204,13 +216,9 @@ print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 #rounded = [round(x[0]) for x in predictions]
 #print(rounded)
 
-
-
 #alter
 
-
 #model.fit(X, epochs=10, batch_size=10)
-
 #preds = model.predict(X)
 #preds[preds>=0.5] = 1
 #preds[preds<0.5] = 0

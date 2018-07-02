@@ -43,7 +43,6 @@ Abdullah_Gul_0012.jpg
 Abdullah_Gul_0013.jpg
 Abdullah_Gul_0014.jpg
 Abdullah_Gul_0015.jpg
-Abdullah_Gul_0016.jpg
 Abdullah_Gul_0017.jpg
 Abdullah_Gul_0018.jpg
 Abdullah_Gul_0019.jpg
@@ -58,7 +57,6 @@ Abel_Pacheco_0002.jpg
 Abel_Pacheco_0003.jpg
 Abel_Pacheco_0004.jpg
 Abid_Hamid_Mahmud_Al-Tikriti_0001.jpg
-Abid_Hamid_Mahmud_Al-Tikriti_0002.jpg
 Abid_Hamid_Mahmud_Al-Tikriti_0003.jpg
 Abner_Martinez_0001.jpg
 Abraham_Foxman_0001.jpg
@@ -240,7 +238,6 @@ Alejandro_Toledo_0014.jpg
 Alejandro_Toledo_0015.jpg
 Alejandro_Toledo_0016.jpg
 Alejandro_Toledo_0017.jpg
-Alejandro_Toledo_0018.jpg
 Alejandro_Toledo_0019.jpg
 Alejandro_Toledo_0020.jpg
 Alejandro_Toledo_0021.jpg
@@ -536,7 +533,6 @@ Andrea_Bocelli_0001.jpg
 Andrea_De_Cruz_0001.jpg
 Andre_Agassi_0001.jpg
 Andre_Agassi_0002.jpg
-Andre_Agassi_0003.jpg
 Andre_Agassi_0004.jpg
 Andre_Agassi_0005.jpg
 Andre_Agassi_0006.jpg
@@ -606,7 +602,6 @@ Andrew_Wetzler_0001.jpg
 Andrzej_Tyszkiewicz_0001.jpg
 Andy_Benes_0001.jpg
 Andy_Bryant_0001.jpg
-Andy_Dick_0001.jpg
 Andy_Garcia_0001.jpg
 Andy_Graves_0001.jpg
 Andy_Griffith_0001.jpg
@@ -863,7 +858,6 @@ Ariel_Sharon_0060.jpg
 Ariel_Sharon_0061.jpg
 Ariel_Sharon_0062.jpg
 Ariel_Sharon_0063.jpg
-Ariel_Sharon_0064.jpg
 Ariel_Sharon_0065.jpg
 Ariel_Sharon_0066.jpg
 Ariel_Sharon_0067.jpg
@@ -1314,7 +1308,6 @@ Bill_Simon_0002.jpg
 Bill_Simon_0003.jpg
 Bill_Simon_0004.jpg
 Bill_Simon_0005.jpg
-Bill_Simon_0006.jpg
 Bill_Simon_0007.jpg
 Bill_Simon_0008.jpg
 Bill_Simon_0009.jpg
@@ -1411,7 +1404,6 @@ Bob_Hope_0007.jpg
 Bob_Hope_0008.jpg
 Bob_Huggins_0001.jpg
 Bob_Huggins_0002.jpg
-Bob_Huggins_0003.jpg
 Bob_Huggins_0004.jpg
 Bob_Iger_0001.jpg
 Bob_Krueger_0001.jpg
@@ -1852,7 +1844,6 @@ Cesar_Gaviria_0006.jpg
 Cesar_Gaviria_0007.jpg
 Cesar_Gaviria_0008.jpg
 Cesar_Maia_0001.jpg
-Cesar_Maia_0002.jpg
 Chadha_Gurinder_0001.jpg
 Chakib_Khelil_0001.jpg
 Chakib_Khelil_0002.jpg
@@ -1891,7 +1882,6 @@ Charles_Kartman_0001.jpg
 Charles_Kartman_0002.jpg
 Charles_Lebois_0001.jpg
 Charles_Mathews_0001.jpg
-Charles_Mathews_0002.jpg
 Charles_Moose_0001.jpg
 Charles_Moose_0002.jpg
 Charles_Moose_0003.jpg
@@ -2005,7 +1995,6 @@ Chris_Dodd_0001.jpg
 Chris_Forsyth_0001.jpg
 Chris_Gratton_0001.jpg
 Chris_Hernandez_0001.jpg
-Chris_Klein_0001.jpg
 Chris_Kolanas_0001.jpg
 Chris_Matthews_0001.jpg
 Chris_Moore_0001.jpg
@@ -3616,6 +3605,7 @@ Fernando_Vargas_0003.jpg
 Fernando_Vargas_0004.jpg
 Fernando_Velardez_0001.jpg
 Festus_Mogae_0001.jpg
+Fidel_Castro_Daiz-Balart_0001.jpg
 Fidel_Castro_0001.jpg
 Fidel_Castro_0002.jpg
 Fidel_Castro_0003.jpg
@@ -3634,7 +3624,6 @@ Fidel_Castro_0015.jpg
 Fidel_Castro_0016.jpg
 Fidel_Castro_0017.jpg
 Fidel_Castro_0018.jpg
-Fidel_Castro_Daiz-Balart_0001.jpg
 Filip_De_Winter_0001.jpg
 Filippo_Inzaghi_0001.jpg
 Filippo_Inzaghi_0002.jpg
@@ -5224,7 +5213,6 @@ Holly_Hunter_0006.jpg
 Holly_Hunter_0007.jpg
 Holly_Robinson_Peete_0001.jpg
 Hong_Myung_0001.jpg
-Hootie_Johnson_0001.jpg
 Hootie_Johnson_0002.jpg
 Horace_Donovan_Reid_0001.jpg
 Horace_Newcomb_0001.jpg
@@ -5276,7 +5264,6 @@ Hugh_Grant_0004.jpg
 Hugh_Grant_0005.jpg
 Hugh_Grant_0006.jpg
 Hugh_Grant_0007.jpg
-Hugh_Grant_0008.jpg
 Hugh_Grant_0009.jpg
 Hugh_Hefner_0001.jpg
 Hugh_Jessiman_0001.jpg
@@ -5353,7 +5340,6 @@ Hugo_Chavez_0069.jpg
 Hugo_Chavez_0070.jpg
 Hugo_Chavez_0071.jpg
 Hugo_Colace_0001.jpg
-Hugo_Conte_0001.jpg
 Hu_Jintao_0001.jpg
 Hu_Jintao_0002.jpg
 Hu_Jintao_0003.jpg
@@ -5427,7 +5413,6 @@ Igor_Ivanov_0003.jpg
 Igor_Ivanov_0004.jpg
 Igor_Ivanov_0005.jpg
 Igor_Ivanov_0006.jpg
-Igor_Ivanov_0007.jpg
 Igor_Ivanov_0008.jpg
 Igor_Ivanov_0009.jpg
 Igor_Ivanov_0010.jpg
@@ -5575,11 +5560,9 @@ Jacques_Chirac_0002.jpg
 Jacques_Chirac_0003.jpg
 Jacques_Chirac_0004.jpg
 Jacques_Chirac_0005.jpg
-Jacques_Chirac_0006.jpg
 Jacques_Chirac_0007.jpg
 Jacques_Chirac_0008.jpg
 Jacques_Chirac_0009.jpg
-Jacques_Chirac_0010.jpg
 Jacques_Chirac_0011.jpg
 Jacques_Chirac_0012.jpg
 Jacques_Chirac_0013.jpg
@@ -5642,7 +5625,6 @@ Jaime_Orti_0001.jpg
 Jaime_Pressly_0001.jpg
 Jake_Brace_0001.jpg
 Jake_Gyllenhaal_0001.jpg
-Jake_Gyllenhaal_0002.jpg
 Jake_Gyllenhaal_0003.jpg
 Jake_Gyllenhaal_0004.jpg
 Jake_Gyllenhaal_0005.jpg
@@ -5705,7 +5687,6 @@ James_Ivory_0002.jpg
 James_Jones_0001.jpg
 James_Jones_0002.jpg
 James_Kelly_0001.jpg
-James_Kelly_0002.jpg
 James_Kelly_0003.jpg
 James_Kelly_0004.jpg
 James_Kelly_0005.jpg
@@ -5727,7 +5708,6 @@ James_Maguire_0002.jpg
 James_Mathis_0001.jpg
 James_May_0001.jpg
 James_McGreevey_0001.jpg
-James_McGreevey_0002.jpg
 James_McGreevey_0003.jpg
 James_McGreevey_0004.jpg
 James_McMahon_0001.jpg
@@ -5781,7 +5761,6 @@ Jan_Bjoerklund_0001.jpg
 Jan_De_Bont_0001.jpg
 Jane_Clayson_0001.jpg
 Jane_Fonda_0001.jpg
-Jane_Fonda_0002.jpg
 Jane_Kaczmarek_0001.jpg
 Jane_Kaczmarek_0002.jpg
 Jane_Krakowski_0001.jpg
@@ -5907,7 +5886,6 @@ Jean_Carnahan_0002.jpg
 Jean_Charest_0001.jpg
 Jean_Charest_0002.jpg
 Jean_Charest_0003.jpg
-Jean_Charest_0004.jpg
 Jean_Charest_0005.jpg
 Jean_Charest_0006.jpg
 Jean_Charest_0007.jpg
@@ -5992,7 +5970,6 @@ Jean-David_Levitte_0006.jpg
 Jean-David_Levitte_0007.jpg
 Jean-David_Levitte_0008.jpg
 Jean-David_Levitte_0009.jpg
-Jean-David_Levitte_0010.jpg
 Jeane_Kirkpatrick_0001.jpg
 Jeanette_Gray_0001.jpg
 Jeanette_Stauffer_0001.jpg
@@ -6053,7 +6030,6 @@ Jeffrey_Immelt_0002.jpg
 Jeffrey_Jones_0001.jpg
 Jeffrey_Jones_0002.jpg
 Jeffrey_Katzenberg_0001.jpg
-Jeffrey_Pfeffer_0001.jpg
 Jeffrey_Scott_Postell_0001.jpg
 Jeffrey_Scott_Postell_0002.jpg
 Jeff_Roehm_0001.jpg
@@ -6254,7 +6230,6 @@ Jerry_Regier_0001.jpg
 Jerry_Regier_0002.jpg
 Jerry_Regier_0003.jpg
 Jerry_Regier_0004.jpg
-Jerry_Rice_0001.jpg
 Jerry_Seinfeld_0001.jpg
 Jerry_Sexton_0001.jpg
 Jerry_Sloan_0001.jpg
@@ -6270,7 +6245,6 @@ Jesse_Harris_0003.jpg
 Jesse_Helms_0001.jpg
 Jesse_Jackson_0001.jpg
 Jesse_Jackson_0002.jpg
-Jesse_Jackson_0003.jpg
 Jesse_Jackson_0004.jpg
 Jesse_Jackson_0005.jpg
 Jesse_Jackson_0006.jpg
@@ -6836,7 +6810,6 @@ John_Stockton_0002.jpg
 John_Stockton_0003.jpg
 John_Stockton_0004.jpg
 John_Stockton_0005.jpg
-John_Sununu_0001.jpg
 John_Sweeney_0001.jpg
 John_Swofford_0001.jpg
 John_Swofford_0002.jpg
@@ -6854,7 +6827,6 @@ John_Travolta_0005.jpg
 John_Travolta_0006.jpg
 John_Travolta_0007.jpg
 John_Tyson_0001.jpg
-John_Velazquez_0001.jpg
 John_Walsh_0001.jpg
 John_Walsh_0002.jpg
 John_Warner_0001.jpg
@@ -6957,7 +6929,6 @@ Jose_Carlo_Fernandez_0001.jpg
 Jose_Carreras_0001.jpg
 Jose_Cevallos_0001.jpg
 Jose_Dirceu_0001.jpg
-Jose_Dirceu_0002.jpg
 Jose_Genoino_0001.jpg
 Jose_Jose_0001.jpg
 Jose_Lina_0001.jpg
@@ -7056,7 +7027,6 @@ Joy_Lee_Sadler_0001.jpg
 JP_Suarez_0001.jpg
 JT_Snow_0001.jpg
 Juan_Antonio_Samaranch_0001.jpg
-Juan_Carlos_0001.jpg
 Juan_Carlos_Ferrero_0001.jpg
 Juan_Carlos_Ferrero_0002.jpg
 Juan_Carlos_Ferrero_0003.jpg
@@ -7087,6 +7057,7 @@ Juan_Carlos_Ferrero_0027.jpg
 Juan_Carlos_Ferrero_0028.jpg
 Juan_Carlos_Morales_0001.jpg
 Juan_Carlos_Ortega_0001.jpg
+Juan_Carlos_0001.jpg
 Juanes_0001.jpg
 Juanes_0002.jpg
 Juanes_0003.jpg
@@ -7220,7 +7191,6 @@ Junichiro_Koizumi_0021.jpg
 Junichiro_Koizumi_0022.jpg
 Junichiro_Koizumi_0023.jpg
 Junichiro_Koizumi_0024.jpg
-Junichiro_Koizumi_0025.jpg
 Junichiro_Koizumi_0026.jpg
 Junichiro_Koizumi_0027.jpg
 Junichiro_Koizumi_0028.jpg
@@ -7456,7 +7426,6 @@ Kent_McCord_0001.jpg
 Kent_Robinson_0001.jpg
 Kent_Rominger_0001.jpg
 Kent_Rominger_0002.jpg
-Ken_Watanabe_0001.jpg
 Ken_Watanabe_0002.jpg
 Ken_Wharfe_0001.jpg
 Kevin_Borseth_0001.jpg
@@ -8054,7 +8023,6 @@ Liza_Minnelli_0007.jpg
 Li_Zhaoxing_0001.jpg
 Li_Zhaoxing_0002.jpg
 Li_Zhaoxing_0003.jpg
-Li_Zhaoxing_0004.jpg
 Li_Zhaoxing_0005.jpg
 Li_Zhaoxing_0006.jpg
 Li_Zhaoxing_0007.jpg
@@ -8187,12 +8155,10 @@ Luis_Gonzalez_Macchi_0004.jpg
 Luis_Gonzalez_Macchi_0005.jpg
 Luis_Guzman_0001.jpg
 Luis_Horna_0001.jpg
-Luis_Horna_0002.jpg
 Luis_Horna_0003.jpg
 Luis_Horna_0004.jpg
 Luis_Horna_0005.jpg
 Luis_Horna_0006.jpg
-Luis_Pujols_0001.jpg
 Luis_Rosario_Huertas_0001.jpg
 Luis_Sanchez_0001.jpg
 Luiz_Felipe_Scolari_0001.jpg
@@ -8229,7 +8195,6 @@ Luiz_Inacio_Lula_da_Silva_0029.jpg
 Luiz_Inacio_Lula_da_Silva_0030.jpg
 Luiz_Inacio_Lula_da_Silva_0031.jpg
 Luiz_Inacio_Lula_da_Silva_0032.jpg
-Luiz_Inacio_Lula_da_Silva_0033.jpg
 Luiz_Inacio_Lula_da_Silva_0034.jpg
 Luiz_Inacio_Lula_da_Silva_0035.jpg
 Luiz_Inacio_Lula_da_Silva_0036.jpg
@@ -8575,7 +8540,6 @@ Marlene_Weingartner_0002.jpg
 Marlon_Devonish_0001.jpg
 Marquier_Montano_Contreras_0001.jpg
 Marquis_Estill_0001.jpg
-Marricia_Tate_0001.jpg
 Marsah_Ambrosius_0001.jpg
 Marsha_Sharp_0001.jpg
 Marsha_Thomason_0001.jpg
@@ -8641,7 +8605,6 @@ Martin_Scorsese_0002.jpg
 Martin_Scorsese_0003.jpg
 Martin_Scorsese_0004.jpg
 Martin_Scorsese_0005.jpg
-Martin_Scorsese_0006.jpg
 Martin_Scorsese_0007.jpg
 Martin_Sheen_0001.jpg
 Martin_Sheen_0002.jpg
@@ -8827,7 +8790,6 @@ Melissa_Mulloy_0001.jpg
 Melissa_Stark_0001.jpg
 Mel_Karmazin_0001.jpg
 Melvin_Talbert_0001.jpg
-Mercedes_Amor_0001.jpg
 Meryl_Streep_0001.jpg
 Meryl_Streep_0002.jpg
 Meryl_Streep_0003.jpg
@@ -9594,7 +9556,6 @@ Nicolas_Macrozonaris_0001.jpg
 Nicolas_Massu_0001.jpg
 Nicolas_Sarkozy_0001.jpg
 Nicola_Wells_0001.jpg
-Nicole_0001.jpg
 Nicole_Hiltz_0001.jpg
 Nicole_Kidman_0001.jpg
 Nicole_Kidman_0002.jpg
@@ -9615,6 +9576,7 @@ Nicole_Kidman_0016.jpg
 Nicole_Kidman_0017.jpg
 Nicole_Kidman_0018.jpg
 Nicole_Kidman_0019.jpg
+Nicole_0001.jpg
 Nicole_Parker_0001.jpg
 Nicoletta_Braschi_0001.jpg
 Nida_Blanca_0001.jpg
@@ -9707,7 +9669,6 @@ Olivia_Newton-John_0002.jpg
 Olivier_Boulay_0001.jpg
 Olivier_Rochus_0001.jpg
 Olympia_Dukakis_0001.jpg
-Omar_el-Heib_0001.jpg
 Omar_Khan_Sharif_0001.jpg
 Omar_Sharif_0001.jpg
 Omar_Sharif_0002.jpg
@@ -9790,7 +9751,6 @@ Paradorn_Srichaphan_0004.jpg
 Paradorn_Srichaphan_0005.jpg
 Paradorn_Srichaphan_0006.jpg
 Paradorn_Srichaphan_0007.jpg
-Paradorn_Srichaphan_0008.jpg
 Paradorn_Srichaphan_0009.jpg
 Paradorn_Srichaphan_0010.jpg
 Paris_Hilton_0001.jpg
@@ -10020,7 +9980,6 @@ Paul_Wolfowitz_0010.jpg
 Paul_Wollnough_0001.jpg
 Pedro_Almodovar_0001.jpg
 Pedro_Almodovar_0002.jpg
-Pedro_Almodovar_0003.jpg
 Pedro_Almodovar_0004.jpg
 Pedro_Almodovar_0005.jpg
 Pedro_Almodovar_0006.jpg
@@ -10061,7 +10020,6 @@ Pervez_Musharraf_0001.jpg
 Pervez_Musharraf_0002.jpg
 Pervez_Musharraf_0003.jpg
 Pervez_Musharraf_0004.jpg
-Pervez_Musharraf_0005.jpg
 Pervez_Musharraf_0006.jpg
 Pervez_Musharraf_0007.jpg
 Pervez_Musharraf_0008.jpg
@@ -10461,7 +10419,6 @@ Rebekah_Chantay_Revels_0004.jpg
 Recep_Tayyip_Erdogan_0001.jpg
 Recep_Tayyip_Erdogan_0002.jpg
 Recep_Tayyip_Erdogan_0003.jpg
-Recep_Tayyip_Erdogan_0004.jpg
 Recep_Tayyip_Erdogan_0005.jpg
 Recep_Tayyip_Erdogan_0006.jpg
 Recep_Tayyip_Erdogan_0007.jpg
@@ -10532,7 +10489,6 @@ Ricardo_Lagos_0001.jpg
 Ricardo_Lagos_0002.jpg
 Ricardo_Lagos_0003.jpg
 Ricardo_Lagos_0004.jpg
-Ricardo_Lagos_0005.jpg
 Ricardo_Lagos_0006.jpg
 Ricardo_Lagos_0007.jpg
 Ricardo_Lagos_0008.jpg
@@ -10602,11 +10558,9 @@ Richard_Gephardt_0008.jpg
 Richard_Gephardt_0009.jpg
 Richard_Gephardt_0010.jpg
 Richard_Gephardt_0011.jpg
-Richard_Gere_0001.jpg
 Richard_Gere_0002.jpg
 Richard_Gere_0003.jpg
 Richard_Gere_0004.jpg
-Richard_Gere_0005.jpg
 Richard_Gere_0006.jpg
 Richard_Gere_0007.jpg
 Richard_Gere_0008.jpg
@@ -11004,13 +10958,11 @@ Roman_Coppola_0001.jpg
 Romano_Prodi_0001.jpg
 Romano_Prodi_0002.jpg
 Romano_Prodi_0003.jpg
-Romano_Prodi_0004.jpg
 Romano_Prodi_0005.jpg
 Romano_Prodi_0006.jpg
 Romano_Prodi_0007.jpg
 Roman_Polanski_0001.jpg
 Roman_Polanski_0002.jpg
-Roman_Polanski_0003.jpg
 Roman_Polanski_0004.jpg
 Roman_Polanski_0005.jpg
 Roman_Polanski_0006.jpg
@@ -11230,7 +11182,6 @@ Salman_Khan_0001.jpg
 Salman_Rushdie_0001.jpg
 Salman_Rushdie_0002.jpg
 Salman_Rushdie_0003.jpg
-Saman_Shali_0001.jpg
 Samantha_Daniels_0001.jpg
 Samantha_Ledster_0001.jpg
 Sam_Bith_0001.jpg
@@ -11303,7 +11254,6 @@ Scott_Blum_0001.jpg
 Scott_Dalton_0001.jpg
 Scott_Dickson_0001.jpg
 Scott_Fawell_0001.jpg
-Scott_Gorelick_0001.jpg
 Scott_Hamilton_0001.jpg
 Scott_Hoch_0001.jpg
 Scott_Hubbard_0001.jpg
@@ -11344,7 +11294,6 @@ Sean_OKeefe_0001.jpg
 Sean_OKeefe_0002.jpg
 Sean_OKeefe_0003.jpg
 Sean_OKeefe_0004.jpg
-Sean_OKeefe_0005.jpg
 Sean_Patrick_OMalley_0001.jpg
 Sean_Patrick_OMalley_0002.jpg
 Sean_Patrick_OMalley_0003.jpg
@@ -11488,7 +11437,6 @@ Sharon_Osbourne_0001.jpg
 Sharon_Osbourne_0002.jpg
 Sharon_Osbourne_0003.jpg
 Sharon_Robinson_0001.jpg
-Sharon_Stone_0001.jpg
 Sharon_Stone_0002.jpg
 Sharon_Stone_0003.jpg
 Sharon_Stone_0004.jpg
@@ -11791,7 +11739,6 @@ Steven_Spielberg_0006.jpg
 Steven_Spielberg_0007.jpg
 Steven_Tyler_0001.jpg
 Steven_Van_Zandt_0001.jpg
-Steve-O_0001.jpg
 Steve_Pagliuca_0001.jpg
 Steve_Park_0001.jpg
 Steve_Park_0002.jpg
@@ -11944,7 +11891,6 @@ Tanya_Holyk_0001.jpg
 Tanya_Lindenmuth_0001.jpg
 Taoufik_Mathlouthi_0001.jpg
 Tara_Dawn_Christensen_0001.jpg
-Tara_Kirk_0001.jpg
 Tara_Reid_0001.jpg
 Tara_VanDerveer_0001.jpg
 Tariq_Aziz_0001.jpg
@@ -12041,7 +11987,6 @@ Thierry_Falise_0002.jpg
 Thierry_Falise_0003.jpg
 Thierry_Mariani_0001.jpg
 Thomas_Birmingham_0001.jpg
-Thomas_Birmingham_0002.jpg
 Thomas_Bjorn_0001.jpg
 Thomas_Bjorn_0002.jpg
 Thomas_Cloyd_0001.jpg
@@ -12077,13 +12022,11 @@ Thomas_Rupprath_0003.jpg
 Thomas_Scavone_0001.jpg
 Thomas_Stewart_0001.jpg
 Thomas_Ulrich_0001.jpg
-Thomas_Van_Essen_0001.jpg
 Thomas_Watjen_0001.jpg
 Thomas_Weston_0001.jpg
 Thomas_Wilkens_0001.jpg
 Thomas_Wyman_0001.jpg
 Thomas_Wyman_0002.jpg
-Thor_Pedersen_0001.jpg
 Tiago_Splitter_0001.jpg
 Tia_Mowry_0001.jpg
 Tian_Liang_0001.jpg
@@ -12156,7 +12099,6 @@ Tim_Jones_0001.jpg
 Tim_Lobinger_0001.jpg
 Tim_Lopes_0001.jpg
 Tim_Matheson_0001.jpg
-Tim_Norbeck_0001.jpg
 Timothy_Coughlin_0001.jpg
 Timothy_Goebel_0001.jpg
 Timothy_McVeigh_0001.jpg
@@ -12243,7 +12185,6 @@ Tom_Daschle_0017.jpg
 Tom_Daschle_0018.jpg
 Tom_Daschle_0019.jpg
 Tom_Daschle_0020.jpg
-Tom_Daschle_0021.jpg
 Tom_Daschle_0022.jpg
 Tom_Daschle_0023.jpg
 Tom_Daschle_0024.jpg
@@ -12597,7 +12538,6 @@ Tubby_Smith_0001.jpg
 Tubby_Smith_0002.jpg
 Tubby_Smith_0003.jpg
 Tuncay_Sanli_0001.jpg
-Tung_Chee-hwa_0001.jpg
 Tung_Chee-hwa_0002.jpg
 Tung_Chee-hwa_0003.jpg
 Tung_Chee-hwa_0004.jpg
@@ -12679,7 +12619,6 @@ Vanessa_Williams_0002.jpg
 Vanessa_Williams_0003.jpg
 Van_Hilley_0001.jpg
 Vassilis_Xiros_0001.jpg
-Vecdi_Gonul_0001.jpg
 Venus_Williams_0001.jpg
 Venus_Williams_0002.jpg
 Venus_Williams_0003.jpg
@@ -12705,6 +12644,7 @@ Vicente_Fernandez_0002.jpg
 Vicente_Fernandez_0003.jpg
 Vicente_Fernandez_0004.jpg
 Vicente_Fernandez_0005.jpg
+Vicente_Fox_de_la_Concha_0001.jpg
 Vicente_Fox_0001.jpg
 Vicente_Fox_0002.jpg
 Vicente_Fox_0003.jpg
@@ -12715,7 +12655,6 @@ Vicente_Fox_0007.jpg
 Vicente_Fox_0008.jpg
 Vicente_Fox_0009.jpg
 Vicente_Fox_0010.jpg
-Vicente_Fox_0011.jpg
 Vicente_Fox_0012.jpg
 Vicente_Fox_0013.jpg
 Vicente_Fox_0014.jpg
@@ -12737,7 +12676,6 @@ Vicente_Fox_0029.jpg
 Vicente_Fox_0030.jpg
 Vicente_Fox_0031.jpg
 Vicente_Fox_0032.jpg
-Vicente_Fox_de_la_Concha_0001.jpg
 Vicki_Zhao_Wei_0001.jpg
 Vicki_Zhao_Wei_0002.jpg
 Victor_Garber_0001.jpg
@@ -12839,7 +12777,6 @@ Vladimir_Putin_0044.jpg
 Vladimir_Putin_0045.jpg
 Vladimir_Putin_0046.jpg
 Vladimir_Putin_0047.jpg
-Vladimir_Putin_0048.jpg
 Vladimir_Putin_0049.jpg
 Vladimir_Spidla_0001.jpg
 Vladimir_Spidla_0002.jpg
@@ -12878,11 +12815,11 @@ Wanda_Ilene_Barzee_0001.jpg
 Wang_Fei_0001.jpg
 Wang_Hailan_0001.jpg
 Wang_Nan_0001.jpg
-Wang_Yi_0001.jpg
-Wang_Yi_0002.jpg
 Wang_Yingfan_0001.jpg
 Wang_Yingfan_0002.jpg
 Wang_Yingfan_0003.jpg
+Wang_Yi_0001.jpg
+Wang_Yi_0002.jpg
 Wan_Yanhai_0001.jpg
 Ward_Cuff_0001.jpg
 Warren_Beatty_0001.jpg
@@ -12926,7 +12863,6 @@ Werner_Schlager_0001.jpg
 Wes_Craven_0001.jpg
 Wesley_Clark_0001.jpg
 Wesley_Clark_0002.jpg
-Whoopi_Goldberg_0001.jpg
 Wilbert_Elki_Meza_Majino_0001.jpg
 Wilbert_Foy_0001.jpg
 Wilfredo_Moreno_0001.jpg
@@ -12992,7 +12928,6 @@ Willis_Roberts_0001.jpg
 Will_Ofenheusle_0001.jpg
 Will_Self_0001.jpg
 Will_Smith_0001.jpg
-Will_Smith_0002.jpg
 Will_Young_0001.jpg
 Wilma_McNabb_0001.jpg
 Wilson_Alvarez_0001.jpg
@@ -13097,7 +13032,6 @@ Yasser_Arafat_0006.jpg
 Yasser_Arafat_0007.jpg
 Yasser_Arafat_0008.jpg
 Yasushi_Akashi_0001.jpg
-Yasushi_Chimura_0001.jpg
 Yekaterina_Guseva_0001.jpg
 Yevgeny_Kafelnikov_0001.jpg
 Yevgeny_Kafelnikov_0002.jpg
@@ -13152,7 +13086,6 @@ Yu_Shyi-kun_0002.jpg
 Yu_Shyi-kun_0003.jpg
 Yu_Shyi-kun_0004.jpg
 Yusuf_Misbac_0001.jpg
-Yuvraj_Singh_0001.jpg
 Yves_Brodeur_0001.jpg
 Zach_Parise_0001.jpg
 Zach_Pillar_0001.jpg

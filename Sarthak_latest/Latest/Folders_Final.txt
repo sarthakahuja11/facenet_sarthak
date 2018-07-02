@@ -278,7 +278,6 @@ Andrew_Wetzler
 Andrzej_Tyszkiewicz
 Andy_Benes
 Andy_Bryant
-Andy_Dick
 Andy_Garcia
 Andy_Graves
 Andy_Griffith
@@ -939,7 +938,6 @@ Chris_Dodd
 Chris_Forsyth
 Chris_Gratton
 Chris_Hernandez
-Chris_Klein
 Chris_Kolanas
 Chris_Matthews
 Chris_Moore
@@ -991,7 +989,6 @@ Chuanyun_Li
 Chuck_Amato
 Chuck_Bednarik
 Chuck_Eidson
-Chuck_Finley
 Chuck_Hagel
 Chuck_Woolery
 Chuck_Yeager
@@ -1034,7 +1031,6 @@ Clifford_Robinson
 Clint_Eastwood
 Clint_Howard
 Clint_Lamebear
-Clive_Lloyd
 Clive_Woodward
 Coco_dEste
 Cole_Chapman
@@ -1410,7 +1406,6 @@ Donna_Ralston
 Donna_Shalala
 Donna_Walker
 Don_Nickles
-Donnie_Brennan
 Donny_Osmond
 Don_Siegelman
 Dora_Bakoyianni
@@ -1517,7 +1512,6 @@ Elaine_Chao
 Elaine_Stritch
 Elena_Bereznaya
 Elena_Bovina
-Elena_de_Chavez
 Elena_Dementieva
 Elena_Likhovtseva
 Elena_Tihomirova
@@ -1702,8 +1696,8 @@ Fernando_Valenzuela
 Fernando_Vargas
 Fernando_Velardez
 Festus_Mogae
-Fidel_Castro
 Fidel_Castro_Daiz-Balart
+Fidel_Castro_z
 Filip_De_Winter
 Filippo_Inzaghi
 Filippo_Volandri
@@ -1803,7 +1797,6 @@ Garry_McCoy
 Garry_Trudeau
 Garry_Witherall
 Garth_Drabinsky
-Gary_Bald
 Gary_Barnett
 Gary_Bauer
 Gary_Bergeron
@@ -2118,7 +2111,6 @@ Hermann_Maier
 Hermes_Gamonal
 Hermogenes_Ebdane_Jr
 Hernan_Crespo
-Hernan_Diaz
 Herta_Daeubler-Gmelin
 Hestrie_Cloette
 Hichiro_Naemura
@@ -2173,7 +2165,6 @@ Hugh_Jessiman
 Hugh_Miller
 Hugo_Chavez
 Hugo_Colace
-Hugo_Conte
 Hu_Jintao
 Hu_Maoyuan
 Humberto_Coelho
@@ -2487,7 +2478,6 @@ Jeffrey_Donaldson
 Jeffrey_Immelt
 Jeffrey_Jones
 Jeffrey_Katzenberg
-Jeffrey_Pfeffer
 Jeffrey_Scott_Postell
 Jeff_Roehm
 Jeff_Schiffner
@@ -2541,7 +2531,6 @@ Jerry_McEntee
 Jerry_Oliver
 Jerry_Pauley
 Jerry_Regier
-Jerry_Rice
 Jerry_Seinfeld
 Jerry_Sexton
 Jerry_Sloan
@@ -2777,7 +2766,6 @@ John_Spencer
 John_Stallworth
 John_Starks
 John_Stockton
-John_Sununu
 John_Sweeney
 John_Swofford
 John_Taylor
@@ -2785,7 +2773,6 @@ John_Thune
 John_Timoney
 John_Travolta
 John_Tyson
-John_Velazquez
 John_Walsh
 John_Warner
 John_Wayne
@@ -2881,8 +2868,8 @@ Joy_Lee_Sadler
 JP_Suarez
 JT_Snow
 Juan_Antonio_Samaranch
-Juan_Carlos
 Juan_Carlos_Ferrero
+Juan_Carlos_g
 Juan_Carlos_Morales
 Juan_Carlos_Ortega
 Juanes
@@ -3395,7 +3382,6 @@ Luis_Gonzalez
 Luis_Gonzalez_Macchi
 Luis_Guzman
 Luis_Horna
-Luis_Pujols
 Luis_Rosario_Huertas
 Luis_Sanchez
 Luiz_Felipe_Scolari
@@ -3584,7 +3570,6 @@ Marlene_Weingartner
 Marlon_Devonish
 Marquier_Montano_Contreras
 Marquis_Estill
-Marricia_Tate
 Marsah_Ambrosius
 Marsha_Sharp
 Marsha_Thomason
@@ -3725,7 +3710,6 @@ Melissa_Mulloy
 Melissa_Stark
 Mel_Karmazin
 Melvin_Talbert
-Mercedes_Amor
 Meryl_Streep
 Mesut_Yilmaz
 Mia_Mottley
@@ -4085,9 +4069,9 @@ Nicolas_Macrozonaris
 Nicolas_Massu
 Nicolas_Sarkozy
 Nicola_Wells
-Nicole
 Nicole_Hiltz
 Nicole_Kidman
+Nicole_p
 Nicole_Parker
 Nicoletta_Braschi
 Nida_Blanca
@@ -4145,7 +4129,6 @@ Olivia_Newton-John
 Olivier_Boulay
 Olivier_Rochus
 Olympia_Dukakis
-Omar_el-Heib
 Omar_Khan_Sharif
 Omar_Sharif
 Omar_Vizquel
@@ -4877,7 +4860,6 @@ Sally_Ride
 Salma_Hayek
 Salman_Khan
 Salman_Rushdie
-Saman_Shali
 Samantha_Daniels
 Samantha_Ledster
 Sam_Bith
@@ -4924,7 +4906,6 @@ Scott_Blum
 Scott_Dalton
 Scott_Dickson
 Scott_Fawell
-Scott_Gorelick
 Scott_Hamilton
 Scott_Hoch
 Scott_Hubbard
@@ -5157,7 +5138,6 @@ Steven_Seagal
 Steven_Spielberg
 Steven_Tyler
 Steven_Van_Zandt
-Steve-O
 Steve_Pagliuca
 Steve_Park
 Steve_Patterson
@@ -5254,7 +5234,6 @@ Tanya_Holyk
 Tanya_Lindenmuth
 Taoufik_Mathlouthi
 Tara_Dawn_Christensen
-Tara_Kirk
 Tara_Reid
 Tara_VanDerveer
 Tariq_Aziz
@@ -5340,12 +5319,10 @@ Thomas_Rupprath
 Thomas_Scavone
 Thomas_Stewart
 Thomas_Ulrich
-Thomas_Van_Essen
 Thomas_Watjen
 Thomas_Weston
 Thomas_Wilkens
 Thomas_Wyman
-Thor_Pedersen
 Tiago_Splitter
 Tia_Mowry
 Tian_Liang
@@ -5367,7 +5344,6 @@ Tim_Jones
 Tim_Lobinger
 Tim_Lopes
 Tim_Matheson
-Tim_Norbeck
 Timothy_Coughlin
 Timothy_Goebel
 Timothy_McVeigh
@@ -5533,14 +5509,13 @@ Vanessa_Redgrave
 Vanessa_Williams
 Van_Hilley
 Vassilis_Xiros
-Vecdi_Gonul
 Venus_Williams
 Vernon_Forrest
 Veronica_Lake
 Viara_Vike-Freiberga
 Vicente_Fernandez
-Vicente_Fox
 Vicente_Fox_de_la_Concha
+Vicente_Foxz
 Vicki_Zhao_Wei
 Victor_Garber
 Victor_Hanescu
@@ -5588,8 +5563,8 @@ Wanda_Ilene_Barzee
 Wang_Fei
 Wang_Hailan
 Wang_Nan
-Wang_Yi
 Wang_Yingfan
+Wang_Yio
 Wan_Yanhai
 Ward_Cuff
 Warren_Beatty
@@ -5610,7 +5585,6 @@ Wen_Jiabao
 Werner_Schlager
 Wes_Craven
 Wesley_Clark
-Whoopi_Goldberg
 Wilbert_Elki_Meza_Majino
 Wilbert_Foy
 Wilfredo_Moreno
@@ -5688,7 +5662,6 @@ Yasein_Taher
 Yashwant_Sinha
 Yasser_Arafat
 Yasushi_Akashi
-Yasushi_Chimura
 Yekaterina_Guseva
 Yevgeny_Kafelnikov
 Yingfan_Wang
@@ -5715,7 +5688,6 @@ Yuri_Malenchenko
 Yusaku_Miyazato
 Yu_Shyi-kun
 Yusuf_Misbac
-Yuvraj_Singh
 Yves_Brodeur
 Zach_Parise
 Zach_Pillar
