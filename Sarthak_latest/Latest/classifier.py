@@ -1,3 +1,27 @@
+"""An example of how to use your own dataset to train a classifier that recognizes people.
+"""
+# MIT License
+#
+# Copyright (c) 2016 David Sandberg
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -61,26 +85,46 @@ def main(args):
             print('Calculating features for images')
             nrof_images = len(paths)
             print(nrof_images)
-	        nrof_batches_per_epoch = int(math.ceil(1.0*nrof_images / args.batch_size))
+	        #print(1)
+            nrof_batches_per_epoch = int(math.ceil(1.0*nrof_images / args.batch_size))
             print(nrof_batches_per_epoch)
             emb_array = np.zeros((nrof_images, embedding_size))
+            #print(emb_array)
+	        #print(2)
             for i in range(nrof_batches_per_epoch):
                 start_index = i*args.batch_size
                 end_index = min((i+1)*args.batch_size, nrof_images)
                 paths_batch = paths[start_index:end_index]
                 images = facenet.load_data(paths_batch, False, False, args.image_size)
                 feed_dict = { images_placeholder:images, phase_train_placeholder:False }
-
                 emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
+
+                a=[]
+                b=[]
+                a = emb_array[0]
+                b = emb_array[1]
+                #print(a)
+                #print(b)
+                cos_sim = dot(a, b) / (norm(a) * norm(b))
+                #print(cos_sim)
+                #result = 1 - spatial.distance.cosine(a,b)
+                dist = np.linalg.norm(a - b)
+                #print(dist)
+                #print(result)
+                angle_in_radians = math.acos(cos_sim)
+                #print(math.degrees(angle_in_radians))
+		        #with open("cos_dist.txt", "w+") as f:
+                #           f.write(a)
+                #          f.write(b)
 
     	        print(emb_array[start_index:end_index,:])
                 print(emb_array[start_index].shape)
+              # cos_sim = dot(a, b) / (norm(a) * norm(b))
+               #print(cos_sim)
 
 
 
 
-
-            '''''
             classifier_filename_exp = os.path.expanduser(args.classifier_filename)
 
             if (args.mode=='TRAIN'):
@@ -127,7 +171,7 @@ def split_dataset(dataset, min_nrof_images_per_class, nrof_train_images_per_clas
             train_set.append(facenet.ImageClass(cls.name, paths[:nrof_train_images_per_class]))
             test_set.append(facenet.ImageClass(cls.name, paths[nrof_train_images_per_class:]))
     return train_set, test_set
-'''''
+
             
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()

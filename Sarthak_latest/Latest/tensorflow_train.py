@@ -2,32 +2,32 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import os
-import random
 import sys
 import math
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.python.keras.layers import Input, Dense, InputLayer, Lambda
+from tensorflow.python.keras.models import Sequential, Model
+from tensorflow.python.keras import backend as K
+from tensorflow.python.keras.activations import sigmoid,softmax
+from tensorflow.python.keras.losses import categorical_crossentropy,binary_crossentropy
 from skimage.io import imread
-from tensorflow.python.platform import gfile
 from tensorflow.python.framework import graph_util
-from keras import backend as K
+import pandas as pd
 
-from scipy.misc import imread
 from sklearn.metrics import accuracy_score
 from data import DataGenerator
 from arch.inception_resnet_v1 import inception_resnet_v1
 import facenet
 import argparse
 
+
 seed = 128
 rng = np.random.RandomState(seed)
 
 slim = tf.contrib.slim
-
-image_size = 250
-#num_races = 5
+image_size = 160
 num_samples = 13143
 
 # initial_learning_rate = 0.001
@@ -48,8 +48,8 @@ val_list_IDs=[]
 for i in range(10000,13144):
     val_list_IDs.append(i)
 
-params = {'height':250,
-          'width':250,
+params = {'height':160,
+          'width':160,
           'batch_size': 2,
           'n_channels': 3,
           'shuffle': True,
@@ -58,20 +58,6 @@ params = {'height':250,
 
 training_generator = DataGenerator(train_list_IDs,**params)
 validation_generator = DataGenerator(val_list_IDs,**params)
-
-
-
-# Parameters
-params = {'height':250,
-          'width':250,
-          'batch_size': 2,
-          'n_channels': 3,
-          'shuffle': True,
-          'output_classes':output_classes,
-          'imagepaths':imagepaths }
-
-#training_generator = DataGenerator(train_list_IDs,**params)
-#validation_generator = DataGenerator(val_list_IDs,**params)
 model_exp = '/media/sarthak11/DATA-2/Datasets_2/lfw/Alter/20180402-114759/20180402-114759.pb'
 
 #sess=tf.Session()
@@ -101,6 +87,7 @@ def freeze_graph_def(sess, input_graph_def, output_node_names):
                 node.name.startswith('phase_train') or node.name.startswith('Bottleneck') or node.name.startswith(
                     'Logits')):
             whitelist_names.append(node.name)
+    #print(whitelist_names)
 
     # Replace all the variables in the graph with constants of the same values
     output_graph_def = graph_util.convert_variables_to_constants(
@@ -108,6 +95,21 @@ def freeze_graph_def(sess, input_graph_def, output_node_names):
         variable_names_whitelist=whitelist_names)
     return output_graph_def
 
+
+
+def get_labels():
+    df = pd.read_csv("Classes.csv", delimiter=",", index_col=False)
+    Y = []
+    for output_class in output_classes:
+        t = np.empty(self.batch_size, output_class, dtype=int)
+        Y.append(t)
+    last = 0
+    #for row in df.itertuples(index=False, name='Pandas'):
+    #   row_read = np.asarray(row)
+    for j in range(0, len(output_classes)):
+        Y[j][i] = df.iloc[:, last:last + output_classes[j]]
+        last += output_classes[j]
+    return Y
 
 def main(args):
     with tf.Graph().as_default():
@@ -126,8 +128,8 @@ def main(args):
 
             #with gfile.FastGFile(model_exp, 'rb') as f:
             #   graph_def = tf.GraphDef()
-            #  graph_def.ParseFromString(f.read())
-             # tf.import_graph_def(graph_def, name='')
+            #   graph_def.ParseFromString(f.read())
+            #tf.import_graph_def(graph_def, name='')
             #print("loaded model")
 
             images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
@@ -135,6 +137,10 @@ def main(args):
             #print (images_placeholder.get_shape()[1])
             embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
+
+            labels=get_labels()
+            labels_placeholder = tf.placeholder(tf.string, shape=73)
+
             embedding_size = embeddings.get_shape()[1]
             #print(embedding_size)
 
@@ -149,34 +155,56 @@ def main(args):
                 end_index = min((i + 1) * args.batch_size, nrof_images)
                 paths_batch = paths[start_index:end_index]
                 images = facenet.load_data(paths_batch, False, False, args.image_size)
-                feed_dict = { images_placeholder:images, phase_train_placeholder:False }
+                feed_dict = { images_placeholder:images, phase_train_placeholder:False , labels_placeholder:labels }
                 #print(feed_dict)
-                emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
+                dense = tf.nn.relu(embeddings)
+                # emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
+                emb_array[start_index:end_index, :] = sess.run(dense, feed_dict=feed_dict)
+
+
+
                 #res=sess.run(embeddings, feed_dict=feed_dict)
                 #print(res)
                 #X[i]=emb_array[start_index:end_index, :]
-
                 #print(X[3])
-                #print(emb_array[start_index:end_index,:])
-                #print(emb_array[start_index].shape)
+                print(emb_array[start_index:end_index,:])
+                print(emb_array[start_index].shape)
 
             input_graph_def = sess.graph.as_graph_def()
             output_graph_def = freeze_graph_def(sess, input_graph_def, 'embeddings')
-            print(output_graph_def)
+            #print(output_graph_def)
 
-model=inception_resnet_v1()
+# model = tf.keras.models.Sequential()
+# input_lyr=Input(shape=(160,160,3))
+
+# net, endpoints = inception_resnet_v1(inputs=(input_lyr))
+# prelogit = endpoints['Mixed_8b']
+#print(model)
+#print("yes")
+
+# def func(prelogit):
+#     x = K.flatten(prelogit)
+#     return x
+# dense = Dense(10)(prelogit)
+# dense = tf.keras.layers.Dense(10)(prelogit)
+# print(type(dense))
+# model1 = tf.keras.models.Model(inputs=input_lyr,outputs=dense)
+#summ=tf.keras.models.Model.summary()
+# tf.keras.models.Model.summary()
+# model1.summary()
+            #print(summ)
+output_list = list()
+losses = list()
+#input_lyr = Input(shape=(32,))
+#sequential_model_out = model(input_lyr)
+
 
 
 '''''
-output_list = list()
-losses = list()
-input_lyr = Input(shape=(32,))
-sequential_model_out = model(input_lyr)
-
 
 # 12 classes for softmax
-race_out=Dense(3,activation='softmax', name='race_out')(sequential_model_out)
-age1_out=Dense(3,activation='softmax', name ='age1_out')(sequential_model_out)
+#race_out=Dense(3,activation='softmax', name='race_out')(sequential_model_out)
+#age1_out=Dense(3,activation='softmax', name ='age1_out')(sequential_model_out)
 age2_out=Dense(2,activation='softmax', name ='age1_out')(sequential_model_out)
 colour_hair_out=Dense(4,activation='softmax', name ='colour_hair_out')(sequential_model_out)
 type_hair_out=Dense(2,activation='softmax', name ='type_hair_out')(sequential_model_out)
@@ -260,7 +288,8 @@ losses=['categorical_crossentropy','categorical_crossentropy','categorical_cross
 
 '''''
 
-model.fit_generator(generator=training_generator,validation_data=validation_generator, use_multiprocessing=True,workers=6)
+#Model.fit_generator(generator=training_generator,validation_data=validation_generator, use_multiprocessing=True,workers=6)
+
 
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
@@ -296,49 +325,34 @@ def parse_arguments(argv):
 if __name__ == '__main__':
     main(parse_arguments(sys.argv[1:]))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ''''
-with tf.Session() as sess:
-    print('Calculating features for images')
-    nrof_images = len(paths)
-    print(nrof_images)
-    # print(1)
-    nrof_batches_per_epoch = int(math.ceil(1.0 * nrof_images / args.batch_size))
-    print(nrof_batches_per_epoch)
-    emb_array = np.zeros((nrof_images, embedding_size))
-    # print(emb_array)
-
-
-    #end_index = min((i+1)*args.batch_size, nrof_images)
-    #paths_batch = paths[start_index:end_index]
-    #images = facenet.load_data(paths_batch, False, False, args.image_size)
-    image_path="/media/sarthak11/DATA-2/Datasets_2/lfw_funneled/Aaron_Eckhart/Aaron_Eckhart_0001.jpg"
-    images=imread(image_path)
-
-    #print(images)
-
-    arr=[]
-    arr.append(images)
-
-    arr =np.array(arr)
-
-    arr= arr.reshape(1,-1)
-    # arr.astype('float32')
-    print(arr.shape)
-    # arr /= 255.
-    # arr -= 0.5
-    # arr *= 2.
-    feed_dict = { images_placeholder:arr, phase_train_placeholder:False }
-    # emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
-    res = sess.run(embeddings, feed_dict=feed_dict)
-
-    print(res)
-    print("success")
-
-    #print(emb_array[start_index:end_index,:])
-    #print(emb_array[start_index].shape)
-
-
-
 
 def run(model_name, project_dir, initial_learning_rate, batch_size, num_epoch):
     # ================= TRAINING INFORMATION ==================
