@@ -93,8 +93,6 @@ model.outputs = [model.layers[-1].output]
 model.layers[-1].outbound_nodes = []
 #model.add(Dense(num_class, activation='softmax'))
 
-
-
 output_list=list()
 losses=list()
 input_lyr=Input(shape=(32,))
@@ -102,7 +100,6 @@ sequential_model_out = model(input_lyr)
 
 #actual_out=Activation('softmax', name='actual_out')(sequential_model_out)
 #acept_rej_layer=Dense(num_classes)(sequential_model_out)
-
 
 # 12 classes for softmax
 race_out=Dense(3,activation='softmax', name='race_out')(sequential_model_out)
@@ -120,7 +117,7 @@ face_out=Dense(3,activation='softmax', name ='face_out')(sequential_model_out)
 
 
 
-# 41 classes for sigmoid
+#41 classes for sigmoid
 male_out=Dense(1,activation='sigmoid', name ='male_out')(sequential_model_out)
 lips_out=Dense(1,activation='sigmoid', name ='lips_out')(sequential_model_out)
 round_jaw_out=Dense(1,activation='sigmoid', name ='round_jaw_out')(sequential_model_out)

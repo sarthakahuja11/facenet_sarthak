@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import csv
 import sys
 import math
 
@@ -22,6 +23,11 @@ from arch.inception_resnet_v1 import inception_resnet_v1
 import facenet
 import argparse
 
+df = pd.read_csv("Classes.csv", delimiter=",", index_col=False)
+
+with open('Classes.csv','rb') as f:
+    reader=csv.reader(f, delimiter = ',')
+    rows=[r for r in reader]
 
 seed = 128
 rng = np.random.RandomState(seed)
@@ -97,19 +103,91 @@ def freeze_graph_def(sess, input_graph_def, output_node_names):
 
 
 
-def get_labels():
-    df = pd.read_csv("Classes.csv", delimiter=",", index_col=False)
+''''def get_labels(args):
     Y = []
     for output_class in output_classes:
-        t = np.empty(self.batch_size, output_class, dtype=int)
+        t = np.empty([int(args.batch_size),len(output_classes)],dtype=int)
+        #print(t)
         Y.append(t)
+        #print(Y)
     last = 0
+    i=0
     #for row in df.itertuples(index=False, name='Pandas'):
     #   row_read = np.asarray(row)
     for j in range(0, len(output_classes)):
+        print("**")
         Y[j][i] = df.iloc[:, last:last + output_classes[j]]
+        i+=1
+        #print(Y[j][i])
         last += output_classes[j]
+        #print(last)
+        print("**")
     return Y
+'''''
+output_list=['race_out','age1_out','age2_out','colour_hair_out','type_hair_out','eyewear_out','face_exp_out',
+              'lighting_out','forehead_out','mouth_out','beard_out','face_out',
+              'male_out','lips_out','round_jaw_out','double_chin','wearing_hat_out','bag_under_eyes_out',
+              'fiveoclock_shadow_out','strong_nose_mouth_lines_out','wearing_lipstick_out','flushed_face_out',
+              'high_cheekbones_out','wearing_earrings_out','indian_out','bald_out','wavy_hair_out',
+              'hairline_out','bangs_out','sideburns_out','blurry_out','flash_out','outdoor_out','bushy_eyebrows_out',
+              'arched_eyebrows_out','narrow_eyes_out','eyes_open_out','brown_eyes_out','big_nose_out','pointy_nose_out',
+              'teeth_not_visible_out','mustache_out','colour_photo_out','posed_photo_out','attractive_man_out',
+              'attractive_woman_out','chubby_out','heavy_makeup_out','rosy_cheeks_out','shiny_skin_out','pale_skin_out',
+              'wearing_necktie_out','wearing_necklace_out']
+
+
+def get_labels(args):
+#    Y = []
+    print("init")
+    for i in range (1,args.batch_size):
+        print(rows[i])
+        print(i)
+    return rows[i]
+
+
+#return Y
+
+def loss1():
+    last=0
+    for i in range(0,11):
+        logits=output_list[i]
+    loss1 = tf.nn.softmax_cross_entropy(logits=logits, labels=df.iloc[:, last:last + output_classes[i]])
+    print(loss1)
+    mean_loss1 = tf.reduce_mean(loss1)
+    return mean_loss1
+
+#mean_loss1=loss1()
+#print(mean_loss1)
+
+
+def loss2():
+    last=32
+    for i in range(12, 52):
+        logits = output_list[i]
+    loss2 = tf.nn.sigmoid_cross_entropy(logits=logits, labels=df.iloc[:, last])
+    last+=1
+    mean_loss2 = tf.reduce_mean(loss2)
+    return mean_loss2
+
+#loss_genders = losses(logits_gender, genders)
+#loss_races = losses(logits_race, races)
+
+losses_list =['race_out_loss','age1_out_loss','age2_out_loss','colour_hair_out_loss','type_hair_out_loss','eyewear_out_loss','face_exp_out_loss',
+             'lighting_out_loss','forehead_out_loss','mouth_out_loss','beard_out_loss','face_out_loss',
+              'male_out_loss','lips_out_loss','round_jaw_out_loss','double_chin','wearing_hat_out_loss','bag_under_eyes_out_loss',
+              'fiveoclock_shadow_out_loss','strong_nose_mouth_lines_out_loss','wearing_lipstick_out_loss','flushed_face_out_loss',
+              'high_cheekbones_out_loss','wearing_earrings_out_loss','indian_out_loss','bald_out_loss','wavy_hair_out_loss',
+              'hairline_out_loss','bangs_out_loss','sideburns_out_loss','blurry_out_loss','flash_out_loss','outdoor_out_loss','bushy_eyebrows_out_loss',
+              'arched_eyebrows_out_loss','narrow_eyes_out_loss','eyes_open_out_loss','brown_eyes_out_loss','big_nose_out_loss','pointy_nose_out_loss',
+              'teeth_not_visible_out_loss','mustache_out_loss','colour_photo_out_loss','posed_photo_out_loss','attractive_man_out_loss',
+              'attractive_woman_out_loss','chubby_out_loss','heavy_makeup_out_loss','rosy_cheeks_out_loss','shiny_skin_out_loss','pale_skin_out_loss',
+              'wearing_necktie_out_loss','wearing_necklace_out_loss']
+
+for i in range(0,11):
+    losses2=loss1()
+for j in range(12,52):
+    losses2=loss2()
+
 
 def main(args):
     with tf.Graph().as_default():
@@ -138,12 +216,13 @@ def main(args):
             embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
             phase_train_placeholder = tf.get_default_graph().get_tensor_by_name("phase_train:0")
 
-            labels=get_labels()
-            labels_placeholder = tf.placeholder(tf.string, shape=73)
+            labels=get_labels(args)
+            #print(labels)
+            labels_placeholder = tf.placeholder(tf.int32, shape=[73])
+
 
             embedding_size = embeddings.get_shape()[1]
             #print(embedding_size)
-
 
             X = []
             print('Calculating features for images')
@@ -157,12 +236,9 @@ def main(args):
                 images = facenet.load_data(paths_batch, False, False, args.image_size)
                 feed_dict = { images_placeholder:images, phase_train_placeholder:False , labels_placeholder:labels }
                 #print(feed_dict)
-                dense = tf.nn.relu(embeddings)
-                # emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
-                emb_array[start_index:end_index, :] = sess.run(dense, feed_dict=feed_dict)
-
-
-
+                #dense = tf.nn.relu(embeddings)
+                emb_array[start_index:end_index,:] = sess.run(embeddings, feed_dict=feed_dict)
+                #emb_array[start_index:end_index, :] = sess.run(dense, feed_dict=feed_dict)
                 #res=sess.run(embeddings, feed_dict=feed_dict)
                 #print(res)
                 #X[i]=emb_array[start_index:end_index, :]
@@ -170,126 +246,151 @@ def main(args):
                 print(emb_array[start_index:end_index,:])
                 print(emb_array[start_index].shape)
 
-            input_graph_def = sess.graph.as_graph_def()
-            output_graph_def = freeze_graph_def(sess, input_graph_def, 'embeddings')
+                input_graph_def = sess.graph.as_graph_def()
+                output_graph_def = freeze_graph_def(sess, input_graph_def, 'embeddings')
+
+                embed=emb_array[start_index:end_index, :]
+                embed_np = np.asarray(embed, np.float32)
+                embed_tf = tf.convert_to_tensor(embed_np, np.float32)
+                #print(embed_tf)
+
             #print(output_graph_def)
 
-# model = tf.keras.models.Sequential()
-# input_lyr=Input(shape=(160,160,3))
+#model = tf.keras.models.Sequential()
+#input_lyr=Input(shape=(160,160,3))
 
-# net, endpoints = inception_resnet_v1(inputs=(input_lyr))
-# prelogit = endpoints['Mixed_8b']
+#net, endpoints = inception_resnet_v1(inputs=(input_lyr))
+#prelogit = endpoints['Mixed_8b']
 #print(model)
 #print("yes")
 
-# def func(prelogit):
-#     x = K.flatten(prelogit)
-#     return x
-# dense = Dense(10)(prelogit)
-# dense = tf.keras.layers.Dense(10)(prelogit)
-# print(type(dense))
-# model1 = tf.keras.models.Model(inputs=input_lyr,outputs=dense)
+#def func(prelogit):
+#x = K.flatten(prelogit)
+#return x
+#dense = Dense(10)(prelogit)
+#dense = tf.keras.layers.Dense(10)(prelogit)
+#print(type(dense))
+#model1 = tf.keras.models.Model(inputs=input_lyr,outputs=dense)
 #summ=tf.keras.models.Model.summary()
-# tf.keras.models.Model.summary()
-# model1.summary()
-            #print(summ)
-output_list = list()
-losses = list()
+#tf.keras.models.Model.summary()
+#model1.summary()
+#print(summ)
 #input_lyr = Input(shape=(32,))
 #sequential_model_out = model(input_lyr)
 
 
-
-'''''
-
-# 12 classes for softmax
-#race_out=Dense(3,activation='softmax', name='race_out')(sequential_model_out)
-#age1_out=Dense(3,activation='softmax', name ='age1_out')(sequential_model_out)
-age2_out=Dense(2,activation='softmax', name ='age1_out')(sequential_model_out)
-colour_hair_out=Dense(4,activation='softmax', name ='colour_hair_out')(sequential_model_out)
-type_hair_out=Dense(2,activation='softmax', name ='type_hair_out')(sequential_model_out)
-eyewear_out=Dense(3,activation='softmax', name ='eyewear_out')(sequential_model_out)
-face_exp_out=Dense(2,activation='softmax', name ='face_exp_out')(sequential_model_out)
-lighting_out=Dense(2,activation='softmax', name ='lighting_out')(sequential_model_out)
-forehead_out=Dense(3,activation='softmax', name ='forehead_out')(sequential_model_out)
-mouth_out=Dense(3,activation='softmax', name ='mouth_out')(sequential_model_out)
-beard_out=Dense(2,activation='softmax', name ='beard_hair_out')(sequential_model_out)
-face_out=Dense(3,activation='softmax', name ='face_out')(sequential_model_out)
-
-
-
-# 41 classes for sigmoid
-male_out=Dense(1,activation='sigmoid', name ='male_out')(sequential_model_out)
-lips_out=Dense(1,activation='sigmoid', name ='lips_out')(sequential_model_out)
-round_jaw_out=Dense(1,activation='sigmoid', name ='round_jaw_out')(sequential_model_out)
-double_chin=Dense(1,activation='sigmoid', name ='double_chin_out')(sequential_model_out)
-wearing_hat_out=Dense(1,activation='sigmoid', name ='wearing_hat_out')(sequential_model_out)
-bag_under_eyes_out=Dense(1,activation='sigmoid', name ='bag_under_eyes_out')(sequential_model_out)
-fiveoclock_shadow_out=Dense(1,activation='sigmoid', name ='fiveoclock_shadow_out')(sequential_model_out)
-strong_nose_mouth_lines_out=Dense(1,activation='sigmoid', name ='stong_nose_mouth_lines_out')(sequential_model_out)
-wearing_lipstick_out=Dense(1,activation='sigmoid', name ='wearing_lipstick_out')(sequential_model_out)
-flushed_face_out=Dense(1,activation='sigmoid', name ='flushed_face_out')(sequential_model_out)
-high_cheekbones_out=Dense(1,activation='sigmoid', name ='high_cheekbones_out')(sequential_model_out)
-wearing_earrings_out=Dense(1,activation='sigmoid', name ='wearing_earrings_out')(sequential_model_out)
-indian_out=Dense(1,activation='sigmoid', name ='indian_out')(sequential_model_out)
-bald_out=Dense(1,activation='sigmoid', name ='bald_out')(sequential_model_out)
-wavy_hair_out=Dense(1,activation='sigmoid', name ='wavy_hair_out')(sequential_model_out)
-hairline_out=Dense(1,activation='sigmoid', name ='hairline_out')(sequential_model_out)
-bangs_out=Dense(1,activation='sigmoid', name ='bangs_out')(sequential_model_out)
-sideburns_out=Dense(1,activation='sigmoid', name ='sideburns_out')(sequential_model_out)
-blurry_out=Dense(1,activation='sigmoid', name ='blurry_out')(sequential_model_out)
-flash_out=Dense(1,activation='sigmoid', name ='flash_out')(sequential_model_out)
-outdoor_out=Dense(1,activation='sigmoid', name ='outdoor_out')(sequential_model_out)
-bushy_eyebrows_out=Dense(1,activation='sigmoid', name ='bushy_eyebrows_out')(sequential_model_out)
-arched_eyebrows_out=Dense(1,activation='sigmoid', name ='arched_eyebrows_out')(sequential_model_out)
-narrow_eyes_out=Dense(1,activation='sigmoid', name ='narrow_eyes_out')(sequential_model_out)
-eyes_open_out=Dense(1,activation='sigmoid', name ='eyes_open_out')(sequential_model_out)
-brown_eyes_out=Dense(1,activation='sigmoid', name ='brown_eyes_out')(sequential_model_out)
-big_nose_out=Dense(1,activation='sigmoid', name ='big_nose_out')(sequential_model_out)
-pointy_nose_out=Dense(1,activation='sigmoid', name ='pointy_nose_out')(sequential_model_out)
-teeth_not_visible_out=Dense(1,activation='sigmoid', name ='teeth_not_visible_out')(sequential_model_out)
-mustache_out=Dense(1,activation='sigmoid', name ='mustache_out')(sequential_model_out)
-colour_photo_out=Dense(1,activation='sigmoid', name ='colour_photo_out')(sequential_model_out)
-posed_photo_out=Dense(1,activation='sigmoid', name ='posed_photo_out')(sequential_model_out)
-attractive_man_out=Dense(1,activation='sigmoid', name ='attractive_man_out')(sequential_model_out)
-attractive_woman_out=Dense(1,activation='sigmoid', name ='attractive_woman_out')(sequential_model_out)
-chubby_out=Dense(1,activation='sigmoid', name ='chubby_out')(sequential_model_out)
-heavy_makeup_out=Dense(1,activation='sigmoid', name ='heavy_makeup_out')(sequential_model_out)
-rosy_cheeks_out=Dense(1,activation='sigmoid', name ='rosy_cheeks_out')(sequential_model_out)
-shiny_skin_out=Dense(1,activation='sigmoid', name ='shiny_skin_out')(sequential_model_out)
-pale_skin_out=Dense(1,activation='sigmoid', name ='pale_skin_out')(sequential_model_out)
-wearing_necktie_out=Dense(1,activation='sigmoid', name ='wearing_necktie_out')(sequential_model_out)
-wearing_necklace_out=Dense(1,activation='sigmoid', name ='wearing_necklace_out')(sequential_model_out)
+                output_list = list()
+                losses = list()
+                # 12 classes for softmax
+                race_out = tf.layers.dense(inputs=embed_tf, units=3, activation=tf.nn.softmax)
+                age1_out = tf.layers.dense(inputs=embed_tf, units=3, activation=tf.nn.softmax)
+                age2_out = tf.layers.dense(inputs=embed_tf, units=2, activation=tf.nn.softmax)
+                colour_hair_out = tf.layers.dense(inputs=embed_tf, units=4, activation=tf.nn.softmax)
+                type_hair_out = tf.layers.dense(inputs=embed_tf, units=2, activation=tf.nn.softmax)
+                eyewear_out = tf.layers.dense(inputs=embed_tf, units=3, activation=tf.nn.softmax)
+                face_exp_out = tf.layers.dense(inputs=embed_tf, units=2, activation=tf.nn.softmax)
+                lighting_out = tf.layers.dense(inputs=embed_tf, units=2, activation=tf.nn.softmax)
+                forehead_out = tf.layers.dense(inputs=embed_tf, units=3, activation=tf.nn.softmax)
+                mouth_out = tf.layers.dense(inputs=embed_tf, units=3, activation=tf.nn.softmax)
+                beard_out = tf.layers.dense(inputs=embed_tf, units=2, activation=tf.nn.softmax)
+                face_out = tf.layers.dense(inputs=embed_tf, units=3, activation=tf.nn.softmax)
+                print(face_out)
 
 
-output_list=[race_out,age1_out,age2_out,colour_hair_out,type_hair_out,eyewear_out,face_exp_out,
-              lighting_out,forehead_out,mouth_out,beard_out,face_out,
-              male_out,lips_out,round_jaw_out,double_chin,wearing_hat_out,bag_under_eyes_out,
-              fiveoclock_shadow_out,strong_nose_mouth_lines_out,wearing_lipstick_out,flushed_face_out,
-              high_cheekbones_out,wearing_earrings_out,indian_out,bald_out,wavy_hair_out,
-              hairline_out,bangs_out,sideburns_out,blurry_out,flash_out,outdoor_out,bushy_eyebrows_out,
-              arched_eyebrows_out,narrow_eyes_out,eyes_open_out,brown_eyes_out,big_nose_out,pointy_nose_out,
-              teeth_not_visible_out,mustache_out,colour_photo_out,posed_photo_out,attractive_man_out,
-              attractive_woman_out,chubby_out,heavy_makeup_out,rosy_cheeks_out,shiny_skin_out,pale_skin_out,
-              wearing_necktie_out,wearing_necklace_out]
+                # 41 classes for sigmoid
+                male_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                lips_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                round_jaw_out =  tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                double_chin = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                wearing_hat_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                bag_under_eyes_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                fiveoclock_shadow_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                strong_nose_mouth_lines_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                wearing_lipstick_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                flushed_face_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                high_cheekbones_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                wearing_earrings_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                indian_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                bald_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                wavy_hair_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                hairline_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                bangs_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                sideburns_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                blurry_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                flash_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                outdoor_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                bushy_eyebrows_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                arched_eyebrows_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                narrow_eyes_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                eyes_open_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                brown_eyes_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                big_nose_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                pointy_nose_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                teeth_not_visible_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                mustache_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                colour_photo_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                posed_photo_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                attractive_man_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                attractive_woman_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                chubby_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                heavy_makeup_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                rosy_cheeks_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                shiny_skin_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                pale_skin_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                wearing_necktie_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                wearing_necklace_out = tf.layers.dense(inputs=embed_tf, units=1, activation=tf.nn.sigmoid)
+                #print(wearing_earrings_out)
 
-losses=['categorical_crossentropy','categorical_crossentropy','categorical_crossentropy','categorical_crossentropy',
-        'categorical_crossentropy','categorical_crossentropy','categorical_crossentropy','categorical_crossentropy',
-        'categorical_crossentropy','categorical_crossentropy','categorical_crossentropy','categorical_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy','binary_crossentropy',
-        'binary_crossentropy']
 
-'''''
+output_list=['race_out','age1_out','age2_out','colour_hair_out','type_hair_out','eyewear_out','face_exp_out',
+              'lighting_out','forehead_out','mouth_out','beard_out','face_out',
+              'male_out','lips_out','round_jaw_out','double_chin','wearing_hat_out','bag_under_eyes_out',
+              'fiveoclock_shadow_out','strong_nose_mouth_lines_out','wearing_lipstick_out','flushed_face_out',
+              'high_cheekbones_out','wearing_earrings_out','indian_out','bald_out','wavy_hair_out',
+              'hairline_out','bangs_out','sideburns_out','blurry_out','flash_out','outdoor_out','bushy_eyebrows_out',
+              'arched_eyebrows_out','narrow_eyes_out','eyes_open_out','brown_eyes_out','big_nose_out','pointy_nose_out',
+              'teeth_not_visible_out','mustache_out','colour_photo_out','posed_photo_out','attractive_man_out',
+              'attractive_woman_out','chubby_out','heavy_makeup_out','rosy_cheeks_out','shiny_skin_out','pale_skin_out',
+              'wearing_necktie_out','wearing_necklace_out']
+
+losses=['tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
+        'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
+        'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy']
+
+
+
+
+
+#race_out_loss=loss1(race_out, df)
+#age1_out_loss=loss1(age1_out,
+#age2_out_loss=loss1
+#colour_hair_out_loss=loss1
+#type_hair_out_loss=loss1
+#eyewear_out_loss
+#face_exp_out_loss
+#lighting_out_loss
+#forehead_out_loss
+#mouth_out_loss
+#beard_out_loss
+#face_out_loss
+
+
+#for i in range(0,52):
+#cost = tf.reduce_mean((losses[i](logits=output_list[i], labels=labels[i])
+#for i in range(12,52)
+#optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+#init = tf.global_variables_initializer()
 
 #Model.fit_generator(generator=training_generator,validation_data=validation_generator, use_multiprocessing=True,workers=6)
-
 
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
