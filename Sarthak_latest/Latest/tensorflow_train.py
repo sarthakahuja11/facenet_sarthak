@@ -325,12 +325,12 @@ def main(args):
                 teeth_not_visible_out,mustache_out,colour_photo_out,posed_photo_out,attractive_man_out,
                 attractive_woman_out,chubby_out,heavy_makeup_out,rosy_cheeks_out,shiny_skin_out,pale_skin_out,
                 wearing_necktie_out,wearing_necklace_out]
-
+                #output_classes = [3, 3, 2, 4, 2, 3, 2, 2, 3, 3, 2, 3]
                 mean_loss1=[]
                 def loss1():
                     last=0
                     l=0
-                    for k in range(0,12):
+                    for k in range(0,11):
                         logits=output_list[k]
                         #print(logits)
                         #print("**")
@@ -338,17 +338,19 @@ def main(args):
                         # start_index = i*args.batch_size
                         loss1 = tf.losses.softmax_cross_entropy(logits=logits, onehot_labels=df.iloc[start_index:end_index, last:last + output_classes[k]])
                         #print(loss1)
-                        mean_loss1 = tf.reduce_mean(loss1)
-                        l+=1
-                        print(mean_loss1)
+                    mean_loss1 = tf.reduce_mean(loss1)
+                    l+=1
+                    print(mean_loss1)
 
-                    print(l)
+                    #print(l)
                     return mean_loss1
 
                 #loss = tf.add_n([loss_genders, loss_races / 5])
                 #mean_loss1=loss1()
                 #print(mean_loss1)
 
+                final_loss1=tf.add_n(mean_loss1[0]/3,mean_loss1[1]/3,mean_loss1[2]/2,mean_loss1[3]/4,mean_loss1[4]/2,mean_loss1[5]/3,
+                                    mean_loss1[6]/2,mean_loss1[7]/2,mean_loss1[8]/3,mean_loss1[9]/3,mean_loss1[10]/2,mean_loss1[11]/3)
 
                 def loss2():
                     last=32
@@ -361,6 +363,8 @@ def main(args):
                     #print(mean_loss2)
                     return mean_loss2
 
+
+
                 for i in range(0,12):
                         #print(i)
                         #print("*")
@@ -371,24 +375,27 @@ def main(args):
                 for j in range(12,53):
                         #print(j)
                         losses2=loss2()
+                        final_loss2 = tf.sum(mean_loss1[i])
 
+                final_loss=final_loss1+final_loss2  #use tf function
 
+                #to check from here
+                final_optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate_decay_factor)
+                train_restnet_op = final_optimizer.minimize(final_loss, var_list=final_variables, global_step=global_step)
 
-losses=['tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
-        'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
-        'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
-        'tf.losses.sigmoid_cross_entropy']
+                '''''
+                for step in range(num_steps_per_epoch):  # num_steps_per_epoch
+                    # l, step_count, curr_summary = train_step(sess, train_op, global_step)
+                    _, summary, step_count, l = sess.run([train_op, summary_op, global_step, loss], {train_mode: True})
+                    # step_count = epoch * num_batches_per_epoch + step
+                    avg_loss += l
+                    # acc +=
 
+                    print("Step%03d loss: %f" % (step + 1, l))
+                    # step_count = epoch * num_steps_per_epoch + step + 1
 
-
+                    writer.add_summary(summary, step_count)
+                '''''
 
 
 #race_out_loss=loss1(race_out, df)
@@ -456,6 +463,20 @@ if __name__ == '__main__':
 
 
 ''''
+losses=['tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
+        'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
+        'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
+        'tf.losses.sigmoid_cross_entropy']
+
+
 
 def run(model_name, project_dir, initial_learning_rate, batch_size, num_epoch):
     # ================= TRAINING INFORMATION ==================
