@@ -8,22 +8,23 @@ import math
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.python.framework import graph_util
+import pandas as pd
+from tensorflow.python.platform import tf_logging as logging
 from tensorflow.python.keras.layers import Input, Dense, InputLayer, Lambda
 from tensorflow.python.keras.models import Sequential, Model
 from tensorflow.python.keras import backend as K
 from tensorflow.python.keras.activations import sigmoid,softmax
 from tensorflow.python.keras.losses import categorical_crossentropy,binary_crossentropy
 from skimage.io import imread
-from tensorflow.python.framework import graph_util
-import pandas as pd
-#import tensorflow.nn
+
 
 embed_tf1=globals()
 output_list=globals()
 
+
 from sklearn.metrics import accuracy_score
 from data import DataGenerator
-from arch.inception_resnet_v1 import inception_resnet_v1
 import facenet
 import argparse
 
@@ -57,6 +58,7 @@ for i in range(0,10000):
 val_list_IDs=[]
 for i in range(10000,13144):
     val_list_IDs.append(i)
+
 
 params = {'height':160,
           'width':160,
@@ -108,39 +110,6 @@ def freeze_graph_def(sess, input_graph_def, output_node_names):
 
 
 
-''''def get_labels(args):
-    Y = []
-    for output_class in output_classes:
-        t = np.empty([int(args.batch_size),len(output_classes)],dtype=int)
-        #print(t)
-        Y.append(t)
-        #print(Y)
-    last = 0
-    i=0
-    #for row in df.itertuples(index=False, name='Pandas'):
-    #   row_read = np.asarray(row)
-    for j in range(0, len(output_classes)):
-        print("**")
-        Y[j][i] = df.iloc[:, last:last + output_classes[j]]
-        i+=1
-        #print(Y[j][i])
-        last += output_classes[j]
-        #print(last)
-        print("**")
-    return Y
-
-output_list=[race_out,age1_out,age2_out,colour_hair_out,type_hair_out,eyewear_out,face_exp_out,
-                lighting_out,forehead_out,mouth_out,beard_out,face_out,
-                male_out,lips_out,round_jaw_out,double_chin,wearing_hat_out,bag_under_eyes_out,
-                fiveoclock_shadow_out,strong_nose_mouth_lines_out,wearing_lipstick_out,flushed_face_out,
-                high_cheekbones_out,wearing_earrings_out,indian_out,bald_out,wavy_hair_out,
-                hairline_out,bangs_out,sideburns_out,blurry_out,flash_out,outdoor_out,bushy_eyebrows_out,
-                arched_eyebrows_out,narrow_eyes_out,eyes_open_out,brown_eyes_out,big_nose_out,pointy_nose_out,
-                teeth_not_visible_out,mustache_out,colour_photo_out,posed_photo_out,attractive_man_out,
-                attractive_woman_out,chubby_out,heavy_makeup_out,rosy_cheeks_out,shiny_skin_out,pale_skin_out,
-                wearing_necktie_out,wearing_necklace_out]
-
-'''''
 def get_labels(args):
 #    Y = []
     print("init")
@@ -150,29 +119,19 @@ def get_labels(args):
     return rows[i]
 
 
+
+
 #return Y
-
-
 #loss_genders = losses(logits_gender, genders)
 #loss_races = losses(logits_race, races)
-
-losses_list =['race_out_loss','age1_out_loss','age2_out_loss','colour_hair_out_loss','type_hair_out_loss','eyewear_out_loss','face_exp_out_loss',
-             'lighting_out_loss','forehead_out_loss','mouth_out_loss','beard_out_loss','face_out_loss',
-              'male_out_loss','lips_out_loss','round_jaw_out_loss','double_chin','wearing_hat_out_loss','bag_under_eyes_out_loss',
-              'fiveoclock_shadow_out_loss','strong_nose_mouth_lines_out_loss','wearing_lipstick_out_loss','flushed_face_out_loss',
-              'high_cheekbones_out_loss','wearing_earrings_out_loss','indian_out_loss','bald_out_loss','wavy_hair_out_loss',
-              'hairline_out_loss','bangs_out_loss','sideburns_out_loss','blurry_out_loss','flash_out_loss','outdoor_out_loss','bushy_eyebrows_out_loss',
-              'arched_eyebrows_out_loss','narrow_eyes_out_loss','eyes_open_out_loss','brown_eyes_out_loss','big_nose_out_loss','pointy_nose_out_loss',
-              'teeth_not_visible_out_loss','mustache_out_loss','colour_photo_out_loss','posed_photo_out_loss','attractive_man_out_loss',
-              'attractive_woman_out_loss','chubby_out_loss','heavy_makeup_out_loss','rosy_cheeks_out_loss','shiny_skin_out_loss','pale_skin_out_loss',
-              'wearing_necktie_out_loss','wearing_necklace_out_loss']
 
 
 def main(args):
     with tf.Graph().as_default():
         with tf.Session() as sess:
             np.random.seed(seed=args.seed)
-
+            log_dir = args.data_dir + 'logs/' + args.model
+            writer = tf.summary.FileWriter(log_dir, graph=tf.get_default_graph())
             dataset = facenet.get_dataset(args.data_dir)
             for cls in dataset:
                 assert 'len(cls.image_paths)>0', 'There must be at least one image for each class in the dataset'
@@ -222,7 +181,7 @@ def main(args):
                 input_graph_def = sess.graph.as_graph_def()
                 output_graph_def = freeze_graph_def(sess, input_graph_def, 'embeddings')
 
-                embed=emb_array[start_index:end_index, :]
+                embed=emb_array[start_index:end_index,:]
                 embed_np = np.asarray(embed, np.float32)
                 embed_tf = tf.convert_to_tensor(embed_np, np.float32)
                 print(embed_tf)
@@ -267,7 +226,7 @@ def main(args):
                 mouth_out = tf.layers.dense(inputs=embed_tf1, units=3, activation=tf.nn.softmax)
                 beard_out = tf.layers.dense(inputs=embed_tf1, units=2, activation=tf.nn.softmax)
                 face_out = tf.layers.dense(inputs=embed_tf1, units=3, activation=tf.nn.softmax)
-                print(face_out)
+                #print(face_out)
 
 
                 # 41 classes for sigmoid
@@ -314,7 +273,6 @@ def main(args):
                 wearing_necklace_out = tf.layers.dense(inputs=embed_tf1, units=1, activation=tf.nn.sigmoid)
                 #print(wearing_earrings_out)
 
-
                 output_list=[race_out,age1_out,age2_out,colour_hair_out,type_hair_out,eyewear_out,face_exp_out,
                 lighting_out,forehead_out,mouth_out,beard_out,face_out,
                 male_out,lips_out,round_jaw_out,double_chin,wearing_hat_out,bag_under_eyes_out,
@@ -327,77 +285,129 @@ def main(args):
                 wearing_necktie_out,wearing_necklace_out]
                 #output_classes = [3, 3, 2, 4, 2, 3, 2, 2, 3, 3, 2, 3]
                 mean_loss1=[]
+                final_loss1=tf.zeros(args.batch_size*12,dtype=tf.float32,name=None)
+                final_loss2=tf.zeros(args.batch_size*41, dtype=tf.float32, name=None)
+
                 def loss1():
                     last=0
                     l=0
-                    for k in range(0,11):
+                    for k in range(0,12):
                         logits=output_list[k]
                         #print(logits)
-                        #print("**")
-                        #print(i)
-                        # start_index = i*args.batch_size
-                        loss1 = tf.losses.softmax_cross_entropy(logits=logits, onehot_labels=df.iloc[start_index:end_index, last:last + output_classes[k]])
-                        #print(loss1)
+                    loss1 = tf.losses.softmax_cross_entropy(logits=logits, onehot_labels=df.iloc[start_index:end_index, last:last + output_classes[k]])
+                    #Loss1[k]=loss1
+                    #print(loss1)
                     mean_loss1 = tf.reduce_mean(loss1)
                     l+=1
-                    print(mean_loss1)
-
+                    #print(mean_loss1)
                     #print(l)
                     return mean_loss1
-
                 #loss = tf.add_n([loss_genders, loss_races / 5])
                 #mean_loss1=loss1()
                 #print(mean_loss1)
-
-                final_loss1=tf.add_n(mean_loss1[0]/3,mean_loss1[1]/3,mean_loss1[2]/2,mean_loss1[3]/4,mean_loss1[4]/2,mean_loss1[5]/3,
-                                    mean_loss1[6]/2,mean_loss1[7]/2,mean_loss1[8]/3,mean_loss1[9]/3,mean_loss1[10]/2,mean_loss1[11]/3)
-
-                def loss2():
-                    last=32
-                    for i in range(12, 52):
-                        logits = output_list[i]
-                        loss2 = tf.losses.sigmoid_cross_entropy(logits=logits, multi_class_labels=  df.iloc[start_index:end_index:, last:last+1])
-                        last+=1
-                        mean_loss2 = tf.reduce_mean(loss2)
-
-                    #print(mean_loss2)
-                    return mean_loss2
-
-
+#               final_loss1=tf.add_n(mean_loss1[0]/3,mean_loss1[1]/3,mean_loss1[2]/2,mean_loss1[3]/4,mean_loss1[4]/2,mean_loss1[5]/3,
+#                                mean_loss1[6]/2,mean_loss1[7]/2,mean_loss1[8]/3,mean_loss1[9]/3,mean_loss1[10]/2,mean_loss1[11]/3)
 
                 for i in range(0,12):
                         #print(i)
                         #print("*")
                         losses2=loss1()
+                        final_loss1+=losses2
+                        #print(losses2)
 
-                print(losses2)
+                print(final_loss1/12)
+
+
+
+                def loss2():
+                    last=32
+                    for m in range(12, 53):
+                        #print(i)
+                        logits = output_list[m]
+                    loss2 = tf.losses.sigmoid_cross_entropy(logits=logits, multi_class_labels=df.iloc[start_index:end_index:, last:last+1])
+                        #print(loss2)
+                    last+=1
+                    mean_loss2 = tf.reduce_mean(loss2)
+                    #print(mean_loss2)
+
+                    return mean_loss2
+                #print(i)
 
                 for j in range(12,53):
-                        #print(j)
-                        losses2=loss2()
-                        final_loss2 = tf.sum(mean_loss1[i])
+                        #print(b)
+                        losses3=loss2()
+                        final_loss2=losses3
+                        #print(losses3)
+                        #final_loss2 = tf.reduce_sum(mean_loss1[i])
+                        #final_loss2 = tf.add_n(losses3)
 
-                final_loss=final_loss1+final_loss2  #use tf function
+#               print(final_loss2)
+                final_loss=tf.reduce_mean(((final_loss1)/12+(final_loss2)/41))
+#               final_loss=tf.add_n(final_loss1,final_loss2)  #use tf function
 
                 #to check from here
                 final_optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate_decay_factor)
-                train_restnet_op = final_optimizer.minimize(final_loss, var_list=final_variables, global_step=global_step)
+                train_op = final_optimizer.minimize(final_loss)#,var_list=final_variables, global_step=global_step)
 
-                '''''
-                for step in range(num_steps_per_epoch):  # num_steps_per_epoch
-                    # l, step_count, curr_summary = train_step(sess, train_op, global_step)
-                    _, summary, step_count, l = sess.run([train_op, summary_op, global_step, loss], {train_mode: True})
-                    # step_count = epoch * num_batches_per_epoch + step
-                    avg_loss += l
-                    # acc +=
+                tf.summary.scalar('total_Loss', final_loss)
+                tf.summary.scalar('learning_rate', learning_rate_decay_factor)
+                tf.summary.image('training_samples', images, max_outputs=4)
 
-                    print("Step%03d loss: %f" % (step + 1, l))
-                    # step_count = epoch * num_steps_per_epoch + step + 1
+                summary_op = tf.summary.merge_all()
 
-                    writer.add_summary(summary, step_count)
-                '''''
+        with tf.Session() as sess:
+            sess.run(tf.global_variables_initializer())
+            avg_loss, acc = 0, 0
+            for epoch in range(args.num_epoch):
+                logging.info('Epoch x%s/%s', epoch + 1, args.num_epoch)
+                #for step in range(args.num_epoch):  # num_steps_per_epoch
+                _, summary,l = sess.run([train_op, summary_op,final_loss],{phase_train_placeholder: True})
+                #step_count = epoch * args.num_epoch + step
+                avg_loss += l
+                print("Step%03d loss: %f" % (args.num_epoch + 1, l))
+                #step_count = epoch * args.num_epoch + step + 1
+                #print(avg_loss)
+                writer.add_summary(summary)
+
+def parse_arguments(argv):
+        parser = argparse.ArgumentParser()
+
+        parser.add_argument('data_dir', type=str,
+                                help='Path to the data directory containing aligned LFW face patches.')
+        parser.add_argument('model', type=str,
+                                 help='Could be either a directory containing the meta_file and ckpt_file or a model protobuf (.pb) file')
+            # parser.add_argument('classifier_filename',
+            # help='Classifier model file name as a pickle (.pkl) file. ' +
+            # 'For training this is the output and for classification this is an input.')
+            # parser.add_argument('--use_split_dataset',
+            #                   help='Indicates that the dataset specified by data_dir should be split into a training and test set. ' +
+            #                         'Otherwise a separate test set can be specified using the test_data_dir option.',
+            #                    action='store_true')
+            # parser.add_argument('--test_data_dir', type=str,
+            #                   help='Path to the test data directory containing aligned images used for testing.')
+        parser.add_argument('--batch_size', type=int,
+                                help='Number of images to process in a batch.', default=90)
+        parser.add_argument('--image_size', type=int,
+                                help='Image size (height, width) in pixels.', default=160)
+        parser.add_argument('--seed', type=int,
+                                help='Random seed.', default=666)
+        parser.add_argument('--min_nrof_images_per_class', type=int,
+                                help='Only include classes with at least this number of images in the dataset',
+                                default=20)
+        parser.add_argument('--nrof_train_images_per_class', type=int,
+                                help='Use this number of images from each class for training and the rest for testing',
+                                default=10)
+        parser.add_argument("--num_epoch", type=int, default=1, help="number of epochs")
+        return parser.parse_args(argv)
 
 
+
+if __name__ == '__main__':
+            main(parse_arguments(sys.argv[1:]))
+
+
+
+#----------------------------------------------------------------------
 #race_out_loss=loss1(race_out, df)
 #age1_out_loss=loss1(age1_out,
 #age2_out_loss=loss1
@@ -411,7 +421,6 @@ def main(args):
 #beard_out_loss
 #face_out_loss
 
-
 #for i in range(0,52):
 #cost = tf.reduce_mean((losses[i](logits=output_list[i], labels=labels[i])
 #for i in range(12,52)
@@ -419,50 +428,11 @@ def main(args):
 #init = tf.global_variables_initializer()
 
 #Model.fit_generator(generator=training_generator,validation_data=validation_generator, use_multiprocessing=True,workers=6)
-
-def parse_arguments(argv):
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument('data_dir', type=str,
-                        help='Path to the data directory containing aligned LFW face patches.')
-    parser.add_argument('model', type=str,
-                        help='Could be either a directory containing the meta_file and ckpt_file or a model protobuf (.pb) file')
-    # parser.add_argument('classifier_filename',
-    # help='Classifier model file name as a pickle (.pkl) file. ' +
-    # 'For training this is the output and for classification this is an input.')
-    #parser.add_argument('--use_split_dataset',
-    #                   help='Indicates that the dataset specified by data_dir should be split into a training and test set. ' +
-    #                         'Otherwise a separate test set can be specified using the test_data_dir option.',
-    #                    action='store_true')
-    #parser.add_argument('--test_data_dir', type=str,
-     #                   help='Path to the test data directory containing aligned images used for testing.')
-    parser.add_argument('--batch_size', type=int,
-                        help='Number of images to process in a batch.', default=90)
-    parser.add_argument('--image_size', type=int,
-                        help='Image size (height, width) in pixels.', default=160)
-    parser.add_argument('--seed', type=int,
-                        help='Random seed.', default=666)
-    parser.add_argument('--min_nrof_images_per_class', type=int,
-                        help='Only include classes with at least this number of images in the dataset', default=20)
-    parser.add_argument('--nrof_train_images_per_class', type=int,
-                        help='Use this number of images from each class for training and the rest for testing',
-                        default=10)
-
-    return parser.parse_args(argv)
-
-
-if __name__ == '__main__':
-    main(parse_arguments(sys.argv[1:]))
-
-
-
-
-
-
-
+#-------------------------------------------------------------------------
 
 
 ''''
+
 losses=['tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
         'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
         'tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy',
@@ -476,29 +446,64 @@ losses=['tf.losses.softmax_cross_entropy','tf.losses.softmax_cross_entropy','tf.
         'tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy','tf.losses.sigmoid_cross_entropy',
         'tf.losses.sigmoid_cross_entropy']
 
+losses_list =['race_out_loss','age1_out_loss','age2_out_loss','colour_hair_out_loss','type_hair_out_loss','eyewear_out_loss','face_exp_out_loss',
+             'lighting_out_loss','forehead_out_loss','mouth_out_loss','beard_out_loss','face_out_loss',
+              'male_out_loss','lips_out_loss','round_jaw_out_loss','double_chin','wearing_hat_out_loss','bag_under_eyes_out_loss',
+              'fiveoclock_shadow_out_loss','strong_nose_mouth_lines_out_loss','wearing_lipstick_out_loss','flushed_face_out_loss',
+              'high_cheekbones_out_loss','wearing_earrings_out_loss','indian_out_loss','bald_out_loss','wavy_hair_out_loss',
+              'hairline_out_loss','bangs_out_loss','sideburns_out_loss','blurry_out_loss','flash_out_loss','outdoor_out_loss','bushy_eyebrows_out_loss',
+              'arched_eyebrows_out_loss','narrow_eyes_out_loss','eyes_open_out_loss','brown_eyes_out_loss','big_nose_out_loss','pointy_nose_out_loss',
+              'teeth_not_visible_out_loss','mustache_out_loss','colour_photo_out_loss','posed_photo_out_loss','attractive_man_out_loss',
+              'attractive_woman_out_loss','chubby_out_loss','heavy_makeup_out_loss','rosy_cheeks_out_loss','shiny_skin_out_loss','pale_skin_out_loss',
+              'wearing_necktie_out_loss','wearing_necklace_out_loss']
 
+def get_labels(args):
+    Y = []
+    for output_class in output_classes:
+        t = np.empty([int(args.batch_size),len(output_classes)],dtype=int)
+        #print(t)
+        Y.append(t)
+        #print(Y)
+    last = 0
+    i=0
+    #for row in df.itertuples(index=False, name='Pandas'):
+    #   row_read = np.asarray(row)
+    for j in range(0, len(output_classes)):
+        print("**")
+        Y[j][i] = df.iloc[:, last:last + output_classes[j]]
+        i+=1
+        #print(Y[j][i])
+        last += output_classes[j]
+        #print(last)
+        print("**")
+    return Y
+
+output_list=[race_out,age1_out,age2_out,colour_hair_out,type_hair_out,eyewear_out,face_exp_out,
+                lighting_out,forehead_out,mouth_out,beard_out,face_out,
+                male_out,lips_out,round_jaw_out,double_chin,wearing_hat_out,bag_under_eyes_out,
+                fiveoclock_shadow_out,strong_nose_mouth_lines_out,wearing_lipstick_out,flushed_face_out,
+                high_cheekbones_out,wearing_earrings_out,indian_out,bald_out,wavy_hair_out,
+                hairline_out,bangs_out,sideburns_out,blurry_out,flash_out,outdoor_out,bushy_eyebrows_out,
+                arched_eyebrows_out,narrow_eyes_out,eyes_open_out,brown_eyes_out,big_nose_out,pointy_nose_out,
+                teeth_not_visible_out,mustache_out,colour_photo_out,posed_photo_out,attractive_man_out,
+                attractive_woman_out,chubby_out,heavy_makeup_out,rosy_cheeks_out,shiny_skin_out,pale_skin_out,
+                wearing_necktie_out,wearing_necklace_out]
 
 def run(model_name, project_dir, initial_learning_rate, batch_size, num_epoch):
     # ================= TRAINING INFORMATION ==================
     num_batches_per_epoch = int(num_samples / batch_size)
     num_steps_per_epoch = num_batches_per_epoch  # Because one step is one batch processed
-
     # ================ DATASET INFORMATION ======================
     #data_dir = project_dir + 'data/'
     #data_file = data_dir + 'train_aug.tfrecords'
-
     # pre-trained checkpoint
     model_dir = project_dir + '20180402-114759'
     pretrained_checkpoint = model_dir + 'model-20180402-114759.ckpt-275.data-00000-of-00001'
-
     # Create the log directory here. Must be done here otherwise import will activate this unneededly.
-
     # State where your log file is at. If it doesn't exist, create it.
     log_dir = project_dir + 'logs/' + model_name
-
     checkpoint_prefix = log_dir + '/model_iters'
     final_checkpoint_file = model_dir + model_name + '_final'
-
     if not os.path.exists(log_dir):
         os.mkdir(log_dir)
 
@@ -508,7 +513,6 @@ def run(model_name, project_dir, initial_learning_rate, batch_size, num_epoch):
             graph_def = tf.GraphDef()
             graph_def.ParseFromString(file.read())
             tf.import_graph_def(graph_def, name='')
-
 
     with tf.Session() as sess:
         # step = sess.run(global_step)
